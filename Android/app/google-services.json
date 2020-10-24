@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "502865291080",
+    "firebase_url": "https://to-do-list-18614.firebaseio.com",
+    "project_id": "to-do-list-18614",
+    "storage_bucket": "to-do-list-18614.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502865291080:android:0e11bf4d6493fbe1c7357d",
+        "android_client_info": {
+          "package_name": "com.jokers.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502865291080-jslfo80aeekibft6h0cd7vnhi964pe86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG-aO_YUbikfJyBQI_h2HzzdDld1hNOMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502865291080-jslfo80aeekibft6h0cd7vnhi964pe86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

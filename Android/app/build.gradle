@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -30,6 +32,10 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-firestore:21.7.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
