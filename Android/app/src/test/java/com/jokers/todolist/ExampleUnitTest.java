@@ -1,4 +1,4 @@
-package com.jokers.myapplication;
+package com.jokers.todolist;
 
 import org.junit.Test;
 
