@@ -8,14 +8,14 @@ package com.jokers.todolist.models;
  */
 public class Tag {
     private String id;
-    private String name;
+    private String text;
 
     public Tag() {
     }
 
-    public Tag(String id, String name) {
+    public Tag(String id, String text) {
         this.id = id;
-        this.name = name;
+        this.text = text;
     }
 
     public String getId() {
@@ -26,11 +26,11 @@ public class Tag {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getText() {
+        return text;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void getText(String name) {
+        this.text = text;
     }
 }
