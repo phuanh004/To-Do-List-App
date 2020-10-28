@@ -54,7 +54,7 @@ public class User{
     public String getPassword(){
         return this.password;
     }
-    public String getEmail(){
+    public String getEmial(){
         return this.email;
     }
     public String getAvatar(){
@@ -81,7 +81,7 @@ public class User{
     public void setAvatar(String avatar){
         this.avatar = avatar;
     }
-    public void setLevel(int level){
+    public void setLevel(String level){
         this.level = level;
     }
     public void addTask(Task task){
