@@ -40,6 +40,7 @@
         "mobilesdk_app_id": "1:502865291080:android:e0dc00f07f6e68d2c7357d",
         "android_client_info": {
           "package_name": "com.jokers.todolist"
+        }
       },
       "oauth_client": [
         {
