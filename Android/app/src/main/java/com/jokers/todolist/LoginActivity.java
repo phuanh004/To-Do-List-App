@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements
     private LoginActivityPresenter presenter;
 
     private EditText mEmailEditText, mPasswordEditText;
-    private Button mLoginButton;
+    private Button mLoginButton, mAsGuestLoginButton;
     private ProgressBar mLoadingProgressBar;
 
     @Override
@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements
         mEmailEditText = findViewById(R.id.emailEditText);
         mPasswordEditText = findViewById(R.id.pwdEditText);
         mLoginButton = findViewById(R.id.loginBtn);
+        mAsGuestLoginButton = findViewById(R.id.asGuestLoginBtn);
 
         // TODO: Validate data from input
         // Click on the login button
@@ -50,6 +51,13 @@ public class LoginActivity extends AppCompatActivity implements
                 // Login
                 presenter.login(mEmailEditText.getText().toString(),
                         mPasswordEditText.getText().toString());
+            }
+        });
+        mAsGuestLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Login
+                presenter.guestLogin();
             }
         });
     }

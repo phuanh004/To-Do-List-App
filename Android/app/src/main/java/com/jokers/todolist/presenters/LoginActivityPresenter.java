@@ -26,8 +26,10 @@ public class LoginActivityPresenter implements OnCompleteListener<AuthResult> {
         view.showProgressBar();
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this);
     }
-
-
+    public void guestLogin() {
+        view.showProgressBar();
+        mAuth.signInAnonymously().addOnCompleteListener(this);
+    }
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
         view.hideProgressBar();
