@@ -77,12 +77,10 @@
     <Button
         android:id="@+id/asGuestLoginBtn"
         android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:text="As Guest Login"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Login Anonymously"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn"
-        app:layout_constraintVertical_bias="0.084" />
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
