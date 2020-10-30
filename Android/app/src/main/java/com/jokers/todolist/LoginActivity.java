@@ -3,6 +3,7 @@ package com.jokers.todolist;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements
     private LoginActivityPresenter presenter;
 
     private EditText mEmailEditText, mPasswordEditText;
-    private Button mLoginButton, mAsGuestLoginButton;
+    private Button mLoginButton, mSignUpButton, mAsGuestLoginButton;
     private ProgressBar mLoadingProgressBar;
 
     @Override
@@ -42,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements
         mPasswordEditText = findViewById(R.id.pwdEditText);
         mLoginButton = findViewById(R.id.loginBtn);
         mAsGuestLoginButton = findViewById(R.id.asGuestLoginBtn);
+        mSignUpButton = findViewById(R.id.signUpBtn);
+
 
         // TODO: Validate data from input
         // Click on the login button
@@ -49,8 +52,15 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 // Login
-                presenter.login(mEmailEditText.getText().toString(),
+                presenter.loginByEmail(mEmailEditText.getText().toString(),
                         mPasswordEditText.getText().toString());
+            }
+        });
+        mSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
         mAsGuestLoginButton.setOnClickListener(new View.OnClickListener() {

@@ -22,7 +22,7 @@ public class LoginActivityPresenter implements OnCompleteListener<AuthResult> {
         this.view = view;
     }
 
-    public void login(String email, String password) {
+    public void loginByEmail(String email, String password) {
         view.showProgressBar();
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this);
     }
