@@ -25,4 +25,6 @@
     <!-- Preferences -->
     <string name="settings_logout_btn">Log out</string>
     <string name="settings_logout_title">Log out</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
