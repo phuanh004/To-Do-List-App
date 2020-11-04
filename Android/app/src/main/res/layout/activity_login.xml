@@ -82,10 +82,10 @@
         android:text="Login Anonymously"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUpBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/goToSignUpBtn" />
 
     <Button
-        android:id="@+id/signUpBtn"
+        android:id="@+id/goToSignUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"

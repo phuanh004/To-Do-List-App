@@ -1,15 +1,14 @@
 package com.jokers.todolist;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.jokers.todolist.presenters.LoginActivityPresenter;
@@ -37,13 +36,12 @@ public class LoginActivity extends AppCompatActivity implements
         presenter = new LoginActivityPresenter(mAuth, this);
         mAuth.addAuthStateListener(this);
 
-        // TODO: Sign Up Button
         mLoadingProgressBar = findViewById(R.id.loading);
         mEmailEditText = findViewById(R.id.emailEditText);
         mPasswordEditText = findViewById(R.id.pwdEditText);
         mLoginButton = findViewById(R.id.loginBtn);
         mAsGuestLoginButton = findViewById(R.id.asGuestLoginBtn);
-        mSignUpButton = findViewById(R.id.signUpBtn);
+        mSignUpButton = findViewById(R.id.goToSignUpBtn);
 
 
         // TODO: Validate data from input
