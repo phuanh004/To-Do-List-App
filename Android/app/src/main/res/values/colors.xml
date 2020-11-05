@@ -13,5 +13,6 @@
     <!--  Button color   -->
     <color name="light_violet">#7C87C5</color>
     <color name="dark_violet">#040227</color>
+    <color name="dark_violet_more">#030029</color>
     <color name="light_pink">#E28FB8</color>
 </resources>
