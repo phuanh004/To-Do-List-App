@@ -1,7 +1,6 @@
 package com.jokers.todolist.models;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class User{
     
@@ -27,7 +26,7 @@ public class User{
 
     }
     */
-    ArrayList<Task> taskList = new ArrayList<Task>();
+    ArrayList<ToDo> toDoList = new ArrayList<ToDo>();
 
     public User(){
         System.out.println("A empty user created");
@@ -63,8 +62,8 @@ public class User{
     public int getLevel(){
         return this.level;
     }
-    public Task getTask(int position){
-        return taskList.get(position);
+    public ToDo getTask(int position){
+        return toDoList.get(position);
     }
 
 
@@ -84,8 +83,8 @@ public class User{
     public void setLevel(int level){
         this.level = level;
     }
-    public void addTask(Task task){
-        taskList.add(task);
+    public void addTask(ToDo toDo){
+        toDoList.add(toDo);
     }
 
 
