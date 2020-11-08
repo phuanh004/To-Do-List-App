@@ -15,8 +15,11 @@ import com.jokers.todolist.models.ToDo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class HomeFragmentPresenter implements ChildEventListener {
+public class HomeFragmentPresenter implements
+        FirebaseAuth.AuthStateListener,
+        ChildEventListener {
 
     private List<ToDo> toDos;
 
@@ -27,16 +30,10 @@ public class HomeFragmentPresenter implements ChildEventListener {
     public HomeFragmentPresenter(View mView) {
         mDatabase = FirebaseDatabase.getInstance().getReference();                      // initialize Firebase Realtime Database
         mAuth = FirebaseAuth.getInstance();                                             // initialize FirebaseAuth instance
+        mAuth.addAuthStateListener(this);
 
         this.mView = mView;
         this.toDos = new ArrayList<>();
-
-        String userId = mAuth.getCurrentUser().getUid();    // $uid
-        DatabaseReference todosRef = mDatabase              // users/$uid/todos
-                .child(userId)
-                .child("todos");
-
-        todosRef.addChildEventListener(this);
     }
 
     // TODO: Sort functions
@@ -70,6 +67,18 @@ public class HomeFragmentPresenter implements ChildEventListener {
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
 
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if (firebaseAuth.getUid() != null) {
+            String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();    // $uid
+            DatabaseReference todosRef = mDatabase                                      // users/$uid/todos
+                    .child(userId)
+                    .child("todos");
+
+            todosRef.addChildEventListener(this);
+        }
     }
 
     public interface View {

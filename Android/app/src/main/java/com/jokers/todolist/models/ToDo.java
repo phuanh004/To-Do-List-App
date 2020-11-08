@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -33,13 +34,10 @@ public class ToDo implements Serializable {
     private String description;
 
     @PropertyName("created_date")
-    private int createdDate;
+    private String createdDate;
 
     @PropertyName("due_date")
-    private Integer dueDate;
-
-    @PropertyName("time_zone")
-    private String timeZone;
+    private String dueDate;
 
 //    @PropertyName("tags")
     private List<Tag> tags = null;
@@ -49,7 +47,7 @@ public class ToDo implements Serializable {
         tags = new ArrayList<>();
     }
 
-    public ToDo(String id, String title, String description, Integer dueDate) {
+    public ToDo(String id, String title, String description, String dueDate) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -73,23 +71,20 @@ public class ToDo implements Serializable {
     }
 
     @PropertyName("created_date")
-    public int getCreatedDate() {
+    public String getCreatedDate() {
         return this.createdDate;
     }
 
     @PropertyName("due_date")
-    public Integer getDueDate() {
+    public String getDueDate() {
         return this.dueDate;
-    }
-
-    @PropertyName("time_zone")
-    public String getTimeZone() {
-        return timeZone;
     }
 
     @Exclude
     public int getTimeRemain() {
-        return this.dueDate = (dueDate != -1) ? (this.dueDate - this.createdDate) : -1;
+        // TODO: rewrite getTimeRemain()
+        return -1;
+//        return this.dueDate = (dueDate != -1) ? (this.dueDate - this.createdDate) : -1;
     }
 
     @Exclude
@@ -115,18 +110,13 @@ public class ToDo implements Serializable {
     }
 
     @PropertyName("created_date")
-    public void setCreatedDate(int createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 
     @PropertyName("due_date")
-    public void setDueDate(Integer dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
-    }
-
-    @PropertyName("time_zone")
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
     }
 
 
@@ -147,11 +137,11 @@ public class ToDo implements Serializable {
      * @return a String for display
      */
     @Exclude
-    public String getCreatedDateInDisplayFormat(String format) {
-        DateFormat df = new SimpleDateFormat(format, Locale.US);
-        String date = df.format(Calendar.getInstance().getTime());
+    public String getDateInDisplayFormat(String format, String unixTime) {
+        DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
+        Date date = new Date(Long.parseLong(unixTime) * 1000L);
 
-        return date;
+        return df.format(date);
     }
 
     /**
