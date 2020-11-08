@@ -1,5 +1,6 @@
 package com.jokers.todolist.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,27 +10,76 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jokers.todolist.AddTodoActivity;
 import com.jokers.todolist.R;
+import com.jokers.todolist.models.ToDo;
+import com.jokers.todolist.presenters.HomeFragmentPresenter;
 
-public class HomeFragment extends Fragment {
+import java.util.List;
 
-    private HomeViewModel homeViewModel;
+public class HomeFragment extends Fragment implements HomeFragmentPresenter.View {
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+    private FloatingActionButton mGoToAddTaskActivityFab;
+    private TextView mResultTextView;
+    private HomeFragmentPresenter mPresenter;
+
+    public HomeFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mGoToAddTaskActivityFab = requireView().findViewById(R.id.goToAddTaskActivityFab);
+        mResultTextView = requireView().findViewById(R.id.resultTextView);
+
+        mPresenter = new HomeFragmentPresenter(this);
+
+        // ACTIONS
+        mGoToAddTaskActivityFab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddTodoActivity.class);
+                startActivity(intent);
             }
         });
-        return root;
+    }
+
+
+    @Override
+    public void updateUI(List<ToDo> toDos) {
+        StringBuilder todoString = new StringBuilder();
+
+        for (ToDo toDo:
+             toDos) {
+            todoString.append(toDo.getTitle()).append("\n");
+        }
+
+        mResultTextView.setText(todoString);
+    }
+
+    @Override
+    public void showProgressBar() {
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+
     }
 }
