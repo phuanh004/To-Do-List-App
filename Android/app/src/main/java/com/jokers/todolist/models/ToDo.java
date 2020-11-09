@@ -44,6 +44,7 @@ public class ToDo implements Serializable {
 
     //Constructor:
     public ToDo() {
+        createdDate = String.valueOf(System.currentTimeMillis() / 1000L);   // Unix time
         tags = new ArrayList<>();
     }
 
