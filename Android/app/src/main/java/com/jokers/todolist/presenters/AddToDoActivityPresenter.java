@@ -1,6 +1,7 @@
 package com.jokers.todolist.presenters;
 
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -67,6 +68,7 @@ public class AddToDoActivityPresenter implements
 
     public interface View {
         ToDo getToDoFromView();
+        void showDateTimeDialog();
         void showProgressBar();
         void hideProgressBar();
     }

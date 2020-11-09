@@ -39,12 +39,14 @@ public class ToDo implements Serializable {
     @PropertyName("due_date")
     private String dueDate;
 
+    @PropertyName("do_date")
+    private String doDate;
+
 //    @PropertyName("tags")
     private List<Tag> tags = null;
 
     //Constructor:
     public ToDo() {
-        createdDate = String.valueOf(System.currentTimeMillis() / 1000L);   // Unix time
         tags = new ArrayList<>();
     }
 
@@ -79,6 +81,11 @@ public class ToDo implements Serializable {
     @PropertyName("due_date")
     public String getDueDate() {
         return this.dueDate;
+    }
+
+    @PropertyName("do_date")
+    public String getDoDate() {
+        return doDate;
     }
 
     @Exclude
@@ -120,6 +127,10 @@ public class ToDo implements Serializable {
         this.dueDate = dueDate;
     }
 
+    @PropertyName("do_date")
+    public void setDoDate(String doDate) {
+        this.doDate = doDate;
+    }
 
     /**
      * All type
