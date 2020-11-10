@@ -6,3 +6,4 @@ Android/app/.project
 Android/app/.classpath
 Android/.settings/org.eclipse.buildship.core.prefs
 Android/.project
+Android/.idea/compiler.xml
