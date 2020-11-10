@@ -30,10 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Declare an instance of FirebaseAuth
     private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
 
-    private DatabaseReference reference;
-    private String onlineUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        mUser = mAuth.getCurrentUser();
-        onlineUserID = mUser.getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
     }
 
     @Override
@@ -76,46 +70,9 @@ public class MainActivity extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
-
-        FirebaseRecyclerOptions<ToDo> options = new FirebaseRecyclerOptions.Builder<ToDo>()
-                .setQuery(reference, ToDo.class)
-                .build();
-
-        FirebaseRecyclerAdapter<ToDo, MyViewHolder> adapter = new FirebaseRecyclerAdapter<ToDo, MyViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull ToDo toDo) {
-                holder.setDueDate(toDo.getDueDate());
-                holder.setTitle(toDo.getTitle());
-                holder.setDescription(toDo.getDescription());
-            }
-
-            @NonNull
-            @Override
-            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieved_layout,parent, false);
-                return new MyViewHolder(view);
-            }
-        };
-
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        View mView;
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
-        public void setTitle (String title) {
-            TextView taskTextView = mView.findViewById(R.id.titleTv);
-            taskTextView.setText(title);
-        }
-        public void setDescription(String description) {
-            TextView descriptionTextView = mView.findViewById(R.id.descriptionTv);
-            descriptionTextView.setText(description);
-        }
-        public void setDueDate(String dueDate) {
-            TextView dateTextView = mView.findViewById(R.id.dueDateTv);
-        }
-    }
+
+
 
 }
