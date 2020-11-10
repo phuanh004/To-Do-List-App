@@ -55,6 +55,7 @@ public class AddTodoActivity extends AppCompatActivity
         mToDoWhenBtn = findViewById(R.id.toDoWhenBtn);
         mToDoDueDateBtn = findViewById(R.id.toDoDueDateBtn);
         mAddToDoBtn = findViewById(R.id.addToDoBtn);
+        mLoadingProgressBar = findViewById(R.id.addToDoLoading);
 
         // Load Presenter
         mPresenter = new AddToDoActivityPresenter(this);
@@ -64,33 +65,24 @@ public class AddTodoActivity extends AppCompatActivity
 
         // ACTIONS
 
-        mToDoWhenBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentDateDialog = DateDialogOf.DO_DATE;
-                showDateTimeDialog();
-            }
+        mToDoWhenBtn.setOnClickListener(v -> {
+            currentDateDialog = DateDialogOf.DO_DATE;
+            showDateTimeDialog();
         });
 
-        mToDoDueDateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentDateDialog = DateDialogOf.DUE_DATE;
-                showDateTimeDialog();
-            }
+        mToDoDueDateBtn.setOnClickListener(v -> {
+            currentDateDialog = DateDialogOf.DUE_DATE;
+            showDateTimeDialog();
         });
 
-        mAddToDoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToDo todo = getToDoFromView();
+        mAddToDoBtn.setOnClickListener(v -> {
+            ToDo todo = getToDoFromView();
 
-                mPresenter.setTodo(todo);
-                mPresenter.addToDB();
+            mPresenter.setTodo(todo);
+            mPresenter.addToDB();
 
-                // Reset
-                mToDo = new ToDo();
-            }
+            // Reset
+            mToDo = new ToDo();
         });
     }
 
@@ -120,37 +112,34 @@ public class AddTodoActivity extends AppCompatActivity
         int year = calendar.get(Calendar.YEAR);
 
         // date picker dialog
+        @SuppressLint("SetTextI18n")
         DatePickerDialog picker = new DatePickerDialog(AddTodoActivity.this,
-            new DatePickerDialog.OnDateSetListener() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            (view, year1, monthOfYear, dayOfMonth) -> {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
-                    Date date;
-                    try {
-                        date = sdf.parse(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                        mDate = String.valueOf(date.getTime()).substring(0, 10); // 10 char unixtime
+                Date date;
+                try {
+                    date = sdf.parse(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
+                    mDate = String.valueOf(date.getTime()).substring(0, 10); // 10 char unixtime
 
-                        switch (currentDateDialog) {
-                            case DUE_DATE:
-                                mToDo.setDueDate(mDate);
-                                mDueDateTextView.setText(
-                                        "Deadline: " +
-                                        mToDo
-                                        .getDateInDisplayFormat("EEE, MMM d", mToDo.getDueDate()));
-                                break;
-                            case DO_DATE:
-                                mToDo.setDoDate(mDate);
-                                mWhenTextView.setText(
-                                        "Do it on: " +
-                                        mToDo
-                                        .getDateInDisplayFormat("EEE, MMM d", mToDo.getDoDate()));
-                        }
-
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    switch (currentDateDialog) {
+                        case DUE_DATE:
+                            mToDo.setDueDate(mDate);
+                            mDueDateTextView.setText(
+                                    "Deadline: " +
+                                    mToDo
+                                    .getDateInDisplayFormat("EEE, MMM d", mToDo.getDueDate()));
+                            break;
+                        case DO_DATE:
+                            mToDo.setDoDate(mDate);
+                            mWhenTextView.setText(
+                                    "Do it on: " +
+                                    mToDo
+                                    .getDateInDisplayFormat("EEE, MMM d", mToDo.getDoDate()));
                     }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
             }, year, month, day);
         picker.show();

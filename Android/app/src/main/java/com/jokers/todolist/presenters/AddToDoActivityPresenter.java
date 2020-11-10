@@ -53,7 +53,7 @@ public class AddToDoActivityPresenter implements
         String toDoKey = todosRef.push().getKey();          // Push to db with unique key
 
         assert toDoKey != null;
-        todosRef.child(toDoKey).setValue(toDo);
+        todosRef.child(toDoKey).setValue(toDo).addOnSuccessListener(this);
 
         this.toDo = null;                                   // Clean data
     }

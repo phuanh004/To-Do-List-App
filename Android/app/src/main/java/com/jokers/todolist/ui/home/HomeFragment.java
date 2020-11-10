@@ -81,15 +81,11 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
         mAuth.addAuthStateListener(this);
 
         // ACTIONS
-        mGoToAddTaskActivityFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddTodoActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
+        mGoToAddTaskActivityFab.setOnClickListener(v ->
+            startActivity(
+                new Intent(getActivity(), AddTodoActivity.class)
+            )
+        );
     }
 
     // For retrieved data
