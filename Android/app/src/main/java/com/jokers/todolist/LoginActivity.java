@@ -46,27 +46,23 @@ public class LoginActivity extends AppCompatActivity implements
 
         // TODO: Validate data from input
         // Click on the login button
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Login
-                presenter.loginByEmail(mEmailEditText.getText().toString(),
-                        mPasswordEditText.getText().toString());
-            }
+        mLoginButton.setOnClickListener(v -> presenter.loginByEmail(
+                mEmailEditText.getText().toString(),
+                mPasswordEditText.getText().toString()
+        ));
+
+        mLoginButton.setOnClickListener(v -> {
+            // Login
+            presenter.loginByEmail(mEmailEditText.getText().toString(),
+                    mPasswordEditText.getText().toString());
         });
-        mSignUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-            }
+        mSignUpButton.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            startActivity(intent);
         });
-        mAsGuestLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Login
-                presenter.guestLogin();
-            }
+        mAsGuestLoginButton.setOnClickListener(v -> {
+            // Login
+            presenter.guestLogin();
         });
     }
 
