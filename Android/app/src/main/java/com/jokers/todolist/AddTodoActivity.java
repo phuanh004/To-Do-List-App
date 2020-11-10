@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jokers.todolist.models.ToDo;
 import com.jokers.todolist.presenters.AddToDoActivityPresenter;
@@ -34,6 +36,7 @@ public class AddTodoActivity extends AppCompatActivity
     private Button mAddToDoBtn, mToDoWhenBtn, mToDoDueDateBtn;
     private EditText mToDoTitleEditText, mToDoDescriptionEditText;
     private TextView mWhenTextView, mDueDateTextView;
+    private ProgressBar mLoadingProgressBar;
 
     private ToDo mToDo;
     private String mDate;
@@ -155,11 +158,21 @@ public class AddTodoActivity extends AppCompatActivity
 
     @Override
     public void showProgressBar() {
-
+        mLoadingProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgressBar() {
+        mLoadingProgressBar.setVisibility(View.INVISIBLE);
+    }
 
+    @Override
+    public void showSuccessMessage() {
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showFailedMessage() {
+        Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
     }
 }

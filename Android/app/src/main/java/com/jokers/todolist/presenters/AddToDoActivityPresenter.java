@@ -19,6 +19,7 @@ import com.jokers.todolist.models.ToDo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AddToDoActivityPresenter implements
         OnSuccessListener<Void>, OnFailureListener{
@@ -41,13 +42,17 @@ public class AddToDoActivityPresenter implements
     /* DATABASE */
 
     public void addToDB(){
-        String userId = mAuth.getCurrentUser().getUid();    // $uid
+        mView.showProgressBar();
+
+        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();    // $uid
         DatabaseReference todosRef = mDatabase              // users/$uid/todos
                 .child(userId)
                 .child("todos");
 
 
         String toDoKey = todosRef.push().getKey();          // Push to db with unique key
+
+        assert toDoKey != null;
         todosRef.child(toDoKey).setValue(toDo);
 
         this.toDo = null;                                   // Clean data
@@ -57,12 +62,14 @@ public class AddToDoActivityPresenter implements
 
     @Override
     public void onSuccess(Void aVoid) {
-
+        mView.hideProgressBar();
+        mView.showSuccessMessage();
     }
 
     @Override
     public void onFailure(@NonNull Exception e) {
-
+        mView.hideProgressBar();
+        mView.showFailedMessage();
     }
 
 
@@ -71,5 +78,7 @@ public class AddToDoActivityPresenter implements
         void showDateTimeDialog();
         void showProgressBar();
         void hideProgressBar();
+        void showSuccessMessage();
+        void showFailedMessage();
     }
 }

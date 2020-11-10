@@ -1,5 +1,7 @@
 package com.jokers.todolist.models;
 
+import android.text.format.DateUtils;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.PropertyName;
@@ -12,6 +14,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 
 /**
  * Task class
@@ -88,11 +92,27 @@ public class ToDo implements Serializable {
         return doDate;
     }
 
+    /**
+     * Calculate date remaining for due date
+     * @return date remaining
+     */
     @Exclude
-    public int getTimeRemain() {
-        // TODO: rewrite getTimeRemain()
-        return -1;
-//        return this.dueDate = (dueDate != -1) ? (this.dueDate - this.createdDate) : -1;
+    public int getDateRemain() {
+        if (dueDate == null) { return 0; }
+        else {
+            Date dueDate = new Date();
+            Date currentDate = new Date();
+
+            dueDate.setTime(Long.parseLong(getDueDate()) * 1000);
+            currentDate.setTime(Long.parseLong(getCurrentDate()) * 1000);
+
+            return (int) (dueDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
+        }
+    }
+
+    @Exclude
+    public String getCurrentDate(){
+        return String.valueOf(System.currentTimeMillis() / 1000L);
     }
 
     @Exclude

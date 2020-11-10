@@ -2,6 +2,7 @@ package com.jokers.todolist.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,12 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
         for (ToDo toDo:
              toDos) {
             todoString.append(toDo.getTitle()).append("\n");
+
+            // TODO: For testing purpose, remove later
+            Log.d("TAG", "updateUI: " + toDo.getTitle()
+                    + " | " + toDo.getDueDate()
+                    + " | " + toDo.getCurrentDate()
+                    + " | " + toDo.getDateRemain());
         }
 
         mResultTextView.setText(todoString);

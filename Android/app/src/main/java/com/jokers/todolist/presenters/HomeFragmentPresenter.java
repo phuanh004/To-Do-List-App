@@ -42,6 +42,7 @@ public class HomeFragmentPresenter implements
     @Override
     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
         ToDo toDo = snapshot.getValue(ToDo.class);
+        assert toDo != null;
         toDo.setID(snapshot.getKey());
 
         toDos.add(toDo);
