@@ -1,7 +1,5 @@
 package com.jokers.todolist.presenters;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -46,6 +44,7 @@ public class HomeFragmentPresenter implements
         toDo.setID(snapshot.getKey());
 
         toDos.add(toDo);
+        mView.addTodo(toDo);
 
         mView.updateUI(toDos);
     }
@@ -84,6 +83,9 @@ public class HomeFragmentPresenter implements
 
     public interface View {
         void updateUI(List<ToDo> toDos);
+        void addTodo(ToDo todo);
+        void changeTodo(ToDo todo);
+        void removeTodo(ToDo todo);
         void showProgressBar();
         void hideProgressBar();
     }

@@ -170,6 +170,9 @@ public class ToDo implements Serializable {
      */
     @Exclude
     public String getDateInDisplayFormat(String format, String unixTime) {
+       if (unixTime == null) {
+           return "";
+       }
         DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
         Date date = new Date(Long.parseLong(unixTime) * 1000L);
 
