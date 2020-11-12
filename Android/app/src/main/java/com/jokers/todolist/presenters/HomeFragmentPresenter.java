@@ -45,8 +45,6 @@ public class HomeFragmentPresenter implements
 
         toDos.add(toDo);
         mView.addTodo(toDo);
-
-        mView.updateUI(toDos);
     }
 
     @Override
@@ -82,7 +80,6 @@ public class HomeFragmentPresenter implements
     }
 
     public interface View {
-        void updateUI(List<ToDo> toDos);
         void addTodo(ToDo todo);
         void changeTodo(ToDo todo);
         void removeTodo(ToDo todo);

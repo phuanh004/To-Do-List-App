@@ -150,11 +150,6 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
-    public void updateUI(List<ToDo> toDos) {
-
-    }
-
-    @Override
     public void addTodo(ToDo todo) {
         mToDos.add(todo);
         mAdapter.notifyItemInserted(mToDos.size());
