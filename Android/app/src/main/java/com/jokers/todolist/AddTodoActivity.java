@@ -1,19 +1,16 @@
 package com.jokers.todolist;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.jokers.todolist.models.ToDo;
 import com.jokers.todolist.presenters.AddToDoActivityPresenter;
@@ -163,5 +160,10 @@ public class AddTodoActivity extends AppCompatActivity
     @Override
     public void showFailedMessage() {
         Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void backToMainActivity() {
+        finish();
     }
 }

@@ -1,5 +1,7 @@
 package com.jokers.todolist.presenters;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -24,6 +26,7 @@ public class HomeFragmentPresenter implements
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private View mView;
+    private DatabaseReference mTodosRef = null;
 
     public HomeFragmentPresenter(View mView) {
         mDatabase = FirebaseDatabase.getInstance().getReference();                      // initialize Firebase Realtime Database
@@ -49,33 +52,41 @@ public class HomeFragmentPresenter implements
 
     @Override
     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+//        Log.d("TAG", "onChildChanged: " + snapshot.getKey());
     }
 
     @Override
     public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+//        Log.d("TAG", "onChildRemoved: " + snapshot.getKey());
     }
 
     @Override
     public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+//        Log.d("TAG", "onChildMoved: ");
     }
 
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
-
+        Log.d("TAG", "onCancelled: ");
     }
 
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        if (firebaseAuth.getUid() != null) {
+        // Start startToDoListener
+        if (mAuth.getUid() != null) {
             String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();    // $uid
-            DatabaseReference todosRef = mDatabase                                      // users/$uid/todos
+            mTodosRef = mDatabase                                      // users/$uid/todos
                     .child(userId)
                     .child("todos");
 
-            todosRef.addChildEventListener(this);
+            // Listen for the data change
+            mTodosRef.addChildEventListener(this);
+        }
+    }
+
+    public void stopToDoListener(){
+        if (mTodosRef != null) {
+            mTodosRef.removeEventListener(this);
         }
     }
 
@@ -83,6 +94,7 @@ public class HomeFragmentPresenter implements
         void addTodo(ToDo todo);
         void changeTodo(ToDo todo);
         void removeTodo(ToDo todo);
+        void resetTodoList();
         void showProgressBar();
         void hideProgressBar();
     }

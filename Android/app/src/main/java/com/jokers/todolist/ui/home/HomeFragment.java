@@ -2,6 +2,7 @@ package com.jokers.todolist.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,19 +43,23 @@ public class HomeFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.d("TAG", "onCreate: ");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("TAG", "onCreateView: ");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
-
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Log.d("TAG", "onViewCreated: ");
 
         // Declare todolist
         mToDos = new ArrayList<>();
@@ -83,6 +88,20 @@ public class HomeFragment extends Fragment implements
                         new Intent(getActivity(), AddTodoActivity.class)
                 )
         );
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("TAG", "onStop: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        Log.d("TAG", "onDestroyView: ");
+        mPresenter.stopToDoListener();
     }
 
     // Retrieve data
@@ -125,6 +144,7 @@ public class HomeFragment extends Fragment implements
         }
 
         // Create new views (invoked by the layout manager)
+        @NonNull
         @Override
         public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                          int viewType) {
@@ -163,6 +183,11 @@ public class HomeFragment extends Fragment implements
     @Override
     public void removeTodo(ToDo todo) {
 
+    }
+
+    @Override
+    public void resetTodoList() {
+        mToDos.clear();
     }
 
     //  TODO: Add Progressbar

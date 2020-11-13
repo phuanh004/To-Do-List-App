@@ -1,24 +1,14 @@
 package com.jokers.todolist.presenters;
 
-import android.util.Log;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.jokers.todolist.models.ToDo;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class AddToDoActivityPresenter implements
@@ -64,6 +54,7 @@ public class AddToDoActivityPresenter implements
     public void onSuccess(Void aVoid) {
         mView.hideProgressBar();
         mView.showSuccessMessage();
+        mView.backToMainActivity();
     }
 
     @Override
@@ -80,5 +71,6 @@ public class AddToDoActivityPresenter implements
         void hideProgressBar();
         void showSuccessMessage();
         void showFailedMessage();
+        void backToMainActivity();
     }
 }
