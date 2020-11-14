@@ -93,7 +93,7 @@ public class HomeFragmentPresenter implements
     public interface View {
         void addTodo(ToDo todo);
         void changeTodo(ToDo todo);
-        void removeTodo(ToDo todo);
+        void removeTodo(String toDoId);
         void resetTodoList();
         void showProgressBar();
         void hideProgressBar();

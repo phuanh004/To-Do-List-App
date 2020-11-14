@@ -166,4 +166,10 @@ public class AddTodoActivity extends AppCompatActivity
     public void backToMainActivity() {
         finish();
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

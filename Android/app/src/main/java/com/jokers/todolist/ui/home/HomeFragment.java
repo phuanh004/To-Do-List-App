@@ -24,6 +24,7 @@ import com.jokers.todolist.presenters.HomeFragmentPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment implements
         HomeFragmentPresenter.View {
@@ -72,7 +73,7 @@ public class HomeFragment extends Fragment implements
         mPresenter = new HomeFragmentPresenter(this);
 
         // Removes blinks
-        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) Objects.requireNonNull(mRecyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
 
         // Recyclerview Adapter
         mAdapter = new MyAdapter();
@@ -84,9 +85,9 @@ public class HomeFragment extends Fragment implements
 
         // ACTIONS
         mGoToAddTaskActivityFab.setOnClickListener(v ->
-                startActivity(
-                        new Intent(getActivity(), AddTodoActivity.class)
-                )
+            startActivity(
+                new Intent(getActivity(), AddTodoActivity.class)
+            )
         );
     }
 
@@ -117,9 +118,9 @@ public class HomeFragment extends Fragment implements
         // you provide access to all the views for a data item in a view holder
         public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView mTaskTextView;
-            private TextView mDescriptionTexView;
-            private TextView mDueDate;
+            private final TextView mTaskTextView;
+            private final TextView mDescriptionTexView;
+            private final TextView mDueDate;
 
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -152,8 +153,7 @@ public class HomeFragment extends Fragment implements
             ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.retrieved_layout, parent, false);
 
-            MyViewHolder vh = new MyViewHolder(v);
-            return vh;
+            return new MyViewHolder(v);
         }
 
         @Override
@@ -171,18 +171,18 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void addTodo(ToDo todo) {
+        Log.d("TAG", "addTodo: " + todo.getID() + " | " + todo.getTitle());
         mToDos.add(todo);
         mAdapter.notifyItemInserted(mToDos.size());
     }
 
     @Override
     public void changeTodo(ToDo todo) {
-
     }
 
     @Override
-    public void removeTodo(ToDo todo) {
-
+    public void removeTodo(String toDoId) {
+        mToDos.removeIf(toDo -> toDo.getID().equals(toDoId));
     }
 
     @Override
