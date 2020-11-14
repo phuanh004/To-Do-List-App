@@ -73,7 +73,13 @@ public class HomeFragmentPresenter implements
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         // Start startToDoListener
-        if (mAuth.getUid() != null) {
+        startToDoListener();
+    }
+
+
+    public void startToDoListener(){
+        // If user signed in but does not have notes
+        if (mAuth.getUid() != null && mTodosRef == null) {
             String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();    // $uid
             mTodosRef = mDatabase                                      // users/$uid/todos
                     .child(userId)
