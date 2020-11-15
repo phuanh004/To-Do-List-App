@@ -191,8 +191,10 @@ public class HomeFragmentPresenter implements
                 mDescriptionTexView.setText(toDo.getDescription());
                 mDoDay.setText(toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoDate()));
                 mDueDateTextView.setText(getFormattedRemainingDays(toDo.getRemainingDays()));
-                mDueDateExpandedTextView.setText("Deadline: " +
-                        toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDueDate()));
+                mDueDateExpandedTextView.setText(
+                    (toDo.getDueDate() == null) ?
+                    "" : "Deadline: " + toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDueDate())
+                );
 
                 mDueDateTextView.setVisibility(toDo.isExpanded() ? android.view.View.GONE : android.view.View.VISIBLE);
                 mDivider.setVisibility(toDo.isExpanded() ? android.view.View.VISIBLE : android.view.View.GONE);
