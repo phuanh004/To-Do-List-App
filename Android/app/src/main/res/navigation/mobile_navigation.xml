@@ -25,6 +25,6 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.jokers.todolist.ui.settings.SettingsFragment"
+        android:name="com.jokers.todolist.ui.settings.SettingFragment"
         android:label="Settings"/>
 </navigation>
