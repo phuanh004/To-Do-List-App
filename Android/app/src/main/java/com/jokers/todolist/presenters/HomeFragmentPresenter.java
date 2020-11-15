@@ -38,6 +38,7 @@ public class HomeFragmentPresenter implements
     private FirebaseAuth mAuth;
     private static View mView;
     private static DatabaseReference mTodosRef = null;
+    private boolean loaded;
 
     public HomeFragmentPresenter(View mView) {
         mDatabase = FirebaseDatabase.getInstance().getReference();                      // initialize Firebase Realtime Database
@@ -51,6 +52,7 @@ public class HomeFragmentPresenter implements
     // TODO: Sort functions
 
 
+    /* FIREBASE RTDB LISTENERS */
     @Override
     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
         ToDo toDo = snapshot.getValue(ToDo.class);
@@ -106,7 +108,18 @@ public class HomeFragmentPresenter implements
     public void stopToDoListener(){
         if (mTodosRef != null) {
             mTodosRef.removeEventListener(this);
+            mTodosRef = null;
         }
+    }
+
+    /* GETTERS AND SETTERS */
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 
     /**

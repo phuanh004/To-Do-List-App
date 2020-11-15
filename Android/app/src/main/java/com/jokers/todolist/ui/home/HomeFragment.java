@@ -42,16 +42,9 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Log.d("TAG", "onCreate: ");
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("TAG", "onCreateView: ");
+        if (mPresenter != null) { mPresenter.startToDoListener(); }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -59,9 +52,7 @@ public class HomeFragment extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Log.d("TAG", "onViewCreated: ");
-
+        
         // Declare todolist
         mToDos = new ArrayList<>();
 
@@ -92,16 +83,8 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        Log.d("TAG", "onStop: ");
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        Log.d("TAG", "onDestroyView: ");
         mPresenter.stopToDoListener();
     }
 
@@ -115,7 +98,6 @@ public class HomeFragment extends Fragment implements
 
     @Override
     public void addTodo(ToDo todo) {
-        Log.d("TAG", "addTodo: " + todo.getID() + " | " + todo.getTitle());
         mToDos.add(todo);
         mAdapter.notifyItemInserted(mToDos.size());
     }
