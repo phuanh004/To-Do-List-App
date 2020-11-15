@@ -1,16 +1,26 @@
 package com.jokers.todolist.presenters;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jokers.todolist.R;
 import com.jokers.todolist.models.ToDo;
 
 import java.util.ArrayList;
@@ -19,14 +29,15 @@ import java.util.Objects;
 
 public class HomeFragmentPresenter implements
         FirebaseAuth.AuthStateListener,
-        ChildEventListener {
+        ChildEventListener,
+        OnSuccessListener<Void> {
 
-    private List<ToDo> toDos;
+    private static List<ToDo> toDos;
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    private View mView;
-    private DatabaseReference mTodosRef = null;
+    private static View mView;
+    private static DatabaseReference mTodosRef = null;
 
     public HomeFragmentPresenter(View mView) {
         mDatabase = FirebaseDatabase.getInstance().getReference();                      // initialize Firebase Realtime Database
@@ -57,7 +68,10 @@ public class HomeFragmentPresenter implements
 
     @Override
     public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-//        Log.d("TAG", "onChildRemoved: " + snapshot.getKey());
+        String removedItemId = snapshot.getKey();
+
+        toDos.removeIf(toDo -> toDo.getID().equals(removedItemId));
+        mView.removeTodo(removedItemId);
     }
 
     @Override
@@ -75,7 +89,6 @@ public class HomeFragmentPresenter implements
         // Start startToDoListener
         startToDoListener();
     }
-
 
     public void startToDoListener(){
         // If user signed in but does not have notes
@@ -96,10 +109,131 @@ public class HomeFragmentPresenter implements
         }
     }
 
+    /**
+     * Remove to-do by id
+     * @param id to-do id
+     */
+    private static void removeToDo(int position, String id) {
+        mTodosRef.child(id).removeValue();
+    }
+
+    /**
+     * Format the remaining days
+     * @param remainDays remaining days
+     * @return result in display format
+     */
+    private static String getFormattedRemainingDays(Integer remainDays) {
+        String result = "";
+
+        if (remainDays == null) { return result; }
+        else if (remainDays == 0) {
+            result = "Due today";
+        } else if (remainDays > 0) {
+            result = remainDays + " days left";
+        } else {
+            result = Math.abs(remainDays) + " days ago";
+        }
+
+        return result;
+    }
+
+    @Override
+    public void onSuccess(Void aVoid) {
+
+    }
+
+    /**
+     * Adapter
+     */
+    public static class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyViewHolder>{
+
+        // Provide a reference to the views for each data item
+        // Complex data items may need more than one view per item, and
+        // you provide access to all the views for a data item in a view holder
+        public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+            private final TextView mTaskTextView;
+            private final TextView mDescriptionTexView;
+            private final TextView mDueDateTextView, mDueDateExpandedTextView;
+            private final TextView mDoDay;
+            private final android.view.View mDivider;
+            private final CheckBox mToDoCheckBox;
+
+            public MyViewHolder(@NonNull android.view.View itemView) {
+                super(itemView);
+
+                // TODO: Add remains folder
+                mTaskTextView = itemView.findViewById(R.id.titleTv);
+                mDescriptionTexView = itemView.findViewById(R.id.descriptionTv);
+                mDueDateTextView = itemView.findViewById(R.id.dueDateTextView);
+                mDueDateExpandedTextView = itemView.findViewById(R.id.dueDateExpandedTv);
+                mDoDay = itemView.findViewById(R.id.doDateTv);
+                mDivider = itemView.findViewById(R.id.toDoSubItemGroup);
+                mToDoCheckBox = itemView.findViewById(R.id.toDoCheckBox);
+            }
+
+            @SuppressLint("SetTextI18n")
+            private void bind(ToDo toDo) {
+                mTaskTextView.setText(toDo.getTitle());
+                mDescriptionTexView.setText(toDo.getDescription());
+                mDoDay.setText(toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoDate()));
+                mDueDateTextView.setText(getFormattedRemainingDays(toDo.getRemainingDays()));
+                mDueDateExpandedTextView.setText(getFormattedRemainingDays(toDo.getRemainingDays()));
+
+                mDueDateTextView.setVisibility(toDo.isExpanded() ? android.view.View.GONE : android.view.View.VISIBLE);
+                mDivider.setVisibility(toDo.isExpanded() ? android.view.View.VISIBLE : android.view.View.GONE);
+            }
+
+        }
+
+        // Provide a suitable constructor (depends on the kind of dataset)
+        public ToDoListAdapter() {}
+
+        // Create new views (invoked by the layout manager)
+        @NonNull
+        @Override
+        public ToDoListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+                                                               int viewType) {
+            // create a new view
+            ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.retrieved_layout, parent, false);
+
+            return new MyViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+            holder.bind(toDos.get(position));
+
+            holder.itemView.setOnClickListener(v -> {
+                // Get the current state of the item
+                boolean expanded = toDos.get(position).isExpanded();
+                // Change the state
+                toDos.get(position).setExpanded(!expanded);
+                // Notify the adapter that item has changed
+                notifyItemChanged(position);
+            });
+
+            holder.mToDoCheckBox.setOnClickListener(v -> {
+                // TODO: Replace this with real function
+                // | move the selected to do to logbook
+
+                // Delete current item
+                removeToDo(position, toDos.get(position).getID());
+//                mView.removeTodo(toDos.get(position).getID());
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return toDos.size();
+        }
+    }
+
     public interface View {
         void addTodo(ToDo todo);
         void changeTodo(ToDo todo);
-        void removeTodo(String toDoId);
+        void removeTodo(String todoId);
         void resetTodoList();
         void showProgressBar();
         void hideProgressBar();

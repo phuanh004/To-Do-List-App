@@ -46,6 +46,9 @@ public class ToDo implements Serializable {
     @PropertyName("do_date")
     private String doDate;
 
+    @Exclude
+    private boolean expanded;                   // Use for the recyclerview
+
 //    @PropertyName("tags")
     private List<Tag> tags = null;
 
@@ -97,9 +100,9 @@ public class ToDo implements Serializable {
      * @return date remaining
      */
     @Exclude
-    public int getDateRemain() {
-        if (dueDate == null) { return 0; }
-        else {
+    public Integer getRemainingDays() {
+//        if (dueDate == null) { return -1; }
+        if (dueDate != null){
             Date dueDate = new Date();
             Date currentDate = new Date();
 
@@ -108,6 +111,8 @@ public class ToDo implements Serializable {
 
             return (int) (dueDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
         }
+
+        return null;
     }
 
     @Exclude
@@ -152,6 +157,11 @@ public class ToDo implements Serializable {
         this.doDate = doDate;
     }
 
+    @Exclude
+    public boolean isExpanded(){
+        return this.expanded;
+    }
+
     /**
      * All type
      *
@@ -189,5 +199,10 @@ public class ToDo implements Serializable {
     public void setTagAt(int position, String id, String text) {
         Tag tag = new Tag(id, text);
         tags.set(position, tag);
+    }
+
+    @Exclude
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 }

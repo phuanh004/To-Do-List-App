@@ -1,16 +1,16 @@
 package com.jokers.todolist.ui.home;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,8 +34,8 @@ public class HomeFragment extends Fragment implements
 
     // Retrieve data
     private RecyclerView mRecyclerView;
-    private static List<ToDo> mToDos;
-    private MyAdapter mAdapter;
+    private List<ToDo> mToDos;
+    private HomeFragmentPresenter.ToDoListAdapter mAdapter;
 
     public HomeFragment() {
         // Required empty public constructor\
@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment implements
         ((SimpleItemAnimator) Objects.requireNonNull(mRecyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
 
         // Recyclerview Adapter
-        mAdapter = new MyAdapter();
+        mAdapter = new HomeFragmentPresenter.ToDoListAdapter();
 
         // Standard setup
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -111,63 +111,7 @@ public class HomeFragment extends Fragment implements
         super.onStart();
     }
 
-    public static class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
-        public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-            private final TextView mTaskTextView;
-            private final TextView mDescriptionTexView;
-            private final TextView mDueDate;
-
-            public MyViewHolder(@NonNull View itemView) {
-                super(itemView);
-
-                // TODO: Add remains folder
-                mTaskTextView = itemView.findViewById(R.id.titleTv);
-                mDescriptionTexView = itemView.findViewById(R.id.descriptionTv);
-                mDueDate = itemView.findViewById(R.id.dueDateTv);
-            }
-
-            private void bind(ToDo toDo) {
-                mTaskTextView.setText(toDo.getTitle());
-                mDescriptionTexView.setText(toDo.getDescription());
-                mDueDate.setText(toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDueDate()));
-            }
-
-        }
-
-        // Provide a suitable constructor (depends on the kind of dataset)
-        public MyAdapter() {
-
-        }
-
-        // Create new views (invoked by the layout manager)
-        @NonNull
-        @Override
-        public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                         int viewType) {
-            // create a new view
-            ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.retrieved_layout, parent, false);
-
-            return new MyViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-            holder.bind(mToDos.get(position));
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mToDos.size();
-        }
-    }
 
     @Override
     public void addTodo(ToDo todo) {
@@ -181,8 +125,9 @@ public class HomeFragment extends Fragment implements
     }
 
     @Override
-    public void removeTodo(String toDoId) {
-        mToDos.removeIf(toDo -> toDo.getID().equals(toDoId));
+    public void removeTodo(String id) {
+        mToDos.removeIf(toDo -> toDo.getID().equals(id));
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
