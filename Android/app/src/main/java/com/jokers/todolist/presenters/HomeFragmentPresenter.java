@@ -143,7 +143,7 @@ public class HomeFragmentPresenter implements
             result = "Due today";
         } else if (remainDays > 0) {
             result = remainDays + " days left";
-        } else {
+        } else if (remainDays < 0){
             result = Math.abs(remainDays) + " days ago";
         }
 
@@ -191,7 +191,8 @@ public class HomeFragmentPresenter implements
                 mDescriptionTexView.setText(toDo.getDescription());
                 mDoDay.setText(toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoDate()));
                 mDueDateTextView.setText(getFormattedRemainingDays(toDo.getRemainingDays()));
-                mDueDateExpandedTextView.setText(getFormattedRemainingDays(toDo.getRemainingDays()));
+                mDueDateExpandedTextView.setText("Deadline: " +
+                        toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDueDate()));
 
                 mDueDateTextView.setVisibility(toDo.isExpanded() ? android.view.View.GONE : android.view.View.VISIBLE);
                 mDivider.setVisibility(toDo.isExpanded() ? android.view.View.VISIBLE : android.view.View.GONE);
@@ -233,7 +234,6 @@ public class HomeFragmentPresenter implements
 
                 // Delete current item
                 removeToDo(position, toDos.get(position).getID());
-//                mView.removeTodo(toDos.get(position).getID());
             });
         }
 

@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
         // Declare todolist
         mToDos = new ArrayList<>();
 

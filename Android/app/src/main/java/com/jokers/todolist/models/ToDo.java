@@ -1,21 +1,19 @@
 package com.jokers.todolist.models;
 
-import android.text.format.DateUtils;
-
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.PropertyName;
+
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 
 /**
  * Task class
@@ -101,15 +99,13 @@ public class ToDo implements Serializable {
      */
     @Exclude
     public Integer getRemainingDays() {
-//        if (dueDate == null) { return -1; }
         if (dueDate != null){
-            Date dueDate = new Date();
-            Date currentDate = new Date();
+            Date _dueDate = new Date(Long.parseLong(getDueDate()) * 1000L);
 
-            dueDate.setTime(Long.parseLong(getDueDate()) * 1000);
-            currentDate.setTime(Long.parseLong(getCurrentDate()) * 1000);
+            LocalDate dueDate = new LocalDate(_dueDate);
+            LocalDate currentDate = LocalDate.now();
 
-            return (int) (dueDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60 * 24);
+            return Days.daysBetween(currentDate, dueDate).getDays();
         }
 
         return null;
