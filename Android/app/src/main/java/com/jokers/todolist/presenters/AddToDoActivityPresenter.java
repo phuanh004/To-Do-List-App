@@ -1,23 +1,15 @@
 package com.jokers.todolist.presenters;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.jokers.todolist.models.ToDo;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 public class AddToDoActivityPresenter implements
         OnSuccessListener<Void>, OnFailureListener{
@@ -40,14 +32,18 @@ public class AddToDoActivityPresenter implements
     /* DATABASE */
 
     public void addToDB(){
-        String userId = mAuth.getCurrentUser().getUid();    // $uid
+        mView.showProgressBar();
+
+        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();    // $uid
         DatabaseReference todosRef = mDatabase              // users/$uid/todos
                 .child(userId)
                 .child("todos");
 
 
         String toDoKey = todosRef.push().getKey();          // Push to db with unique key
-        todosRef.child(toDoKey).setValue(toDo);
+
+        assert toDoKey != null;
+        todosRef.child(toDoKey).setValue(toDo).addOnSuccessListener(this);
 
         this.toDo = null;                                   // Clean data
     }
@@ -56,18 +52,25 @@ public class AddToDoActivityPresenter implements
 
     @Override
     public void onSuccess(Void aVoid) {
-
+        mView.hideProgressBar();
+        mView.showSuccessMessage();
+        mView.backToMainActivity();
     }
 
     @Override
     public void onFailure(@NonNull Exception e) {
-
+        mView.hideProgressBar();
+        mView.showFailedMessage();
     }
 
 
     public interface View {
         ToDo getToDoFromView();
+        void showDateTimeDialog();
         void showProgressBar();
         void hideProgressBar();
+        void showSuccessMessage();
+        void showFailedMessage();
+        void backToMainActivity();
     }
 }

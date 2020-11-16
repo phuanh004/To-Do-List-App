@@ -27,6 +27,8 @@ public class User{
     }
     */
     ArrayList<ToDo> toDoList = new ArrayList<ToDo>();
+    //initalize a points system on the User:
+    Points points = new Points();
 
     public User(){
         System.out.println("A empty user created");

@@ -4,11 +4,13 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.PropertyName;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +40,12 @@ public class ToDo implements Serializable {
 
     @PropertyName("due_date")
     private String dueDate;
+
+    @PropertyName("do_date")
+    private String doDate;
+
+    @Exclude
+    private boolean expanded;                   // Use for the recyclerview
 
 //    @PropertyName("tags")
     private List<Tag> tags = null;
@@ -80,11 +88,32 @@ public class ToDo implements Serializable {
         return this.dueDate;
     }
 
+    @PropertyName("do_date")
+    public String getDoDate() {
+        return doDate;
+    }
+
+    /**
+     * Calculate date remaining for due date
+     * @return date remaining
+     */
     @Exclude
-    public int getTimeRemain() {
-        // TODO: rewrite getTimeRemain()
-        return -1;
-//        return this.dueDate = (dueDate != -1) ? (this.dueDate - this.createdDate) : -1;
+    public Integer getRemainingDays() {
+        if (dueDate != null){
+            Date _dueDate = new Date(Long.parseLong(getDueDate()) * 1000L);
+
+            LocalDate dueDate = new LocalDate(_dueDate);
+            LocalDate currentDate = LocalDate.now();
+
+            return Days.daysBetween(currentDate, dueDate).getDays();
+        }
+
+        return null;
+    }
+
+    @Exclude
+    public String getCurrentDate(){
+        return String.valueOf(System.currentTimeMillis() / 1000L);
     }
 
     @Exclude
@@ -119,6 +148,15 @@ public class ToDo implements Serializable {
         this.dueDate = dueDate;
     }
 
+    @PropertyName("do_date")
+    public void setDoDate(String doDate) {
+        this.doDate = doDate;
+    }
+
+    @Exclude
+    public boolean isExpanded(){
+        return this.expanded;
+    }
 
     /**
      * All type
@@ -138,6 +176,9 @@ public class ToDo implements Serializable {
      */
     @Exclude
     public String getDateInDisplayFormat(String format, String unixTime) {
+       if (unixTime == null) {
+           return "";
+       }
         DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
         Date date = new Date(Long.parseLong(unixTime) * 1000L);
 
@@ -154,5 +195,10 @@ public class ToDo implements Serializable {
     public void setTagAt(int position, String id, String text) {
         Tag tag = new Tag(id, text);
         tags.set(position, tag);
+    }
+
+    @Exclude
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
     }
 }

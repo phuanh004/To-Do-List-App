@@ -1,15 +1,20 @@
 package com.jokers.todolist.ui.home;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jokers.todolist.AddTodoActivity;
@@ -17,26 +22,29 @@ import com.jokers.todolist.R;
 import com.jokers.todolist.models.ToDo;
 import com.jokers.todolist.presenters.HomeFragmentPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class HomeFragment extends Fragment implements HomeFragmentPresenter.View {
+public class HomeFragment extends Fragment implements
+        HomeFragmentPresenter.View {
 
     private FloatingActionButton mGoToAddTaskActivityFab;
-    private TextView mResultTextView;
     private HomeFragmentPresenter mPresenter;
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    // Retrieve data
+    private RecyclerView mRecyclerView;
+    private List<ToDo> mToDos;
+    private HomeFragmentPresenter.ToDoListAdapter mAdapter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public HomeFragment() {
+        // Required empty public constructor\
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (mPresenter != null) { mPresenter.startToDoListener(); }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -45,34 +53,71 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mGoToAddTaskActivityFab = requireView().findViewById(R.id.goToAddTaskActivityFab);
-        mResultTextView = requireView().findViewById(R.id.resultTextView);
+        // Declare todolist
+        mToDos = new ArrayList<>();
 
+        // Binding view
+        mGoToAddTaskActivityFab = requireView().findViewById(R.id.goToAddTaskActivityFab);
+        mRecyclerView = requireView().findViewById(R.id.recyclerView);
+
+        // Declare presenter
         mPresenter = new HomeFragmentPresenter(this);
 
+        // Removes blinks
+        ((SimpleItemAnimator) Objects.requireNonNull(mRecyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
+
+        // Recyclerview Adapter
+        mAdapter = new HomeFragmentPresenter.ToDoListAdapter();
+
+        // Standard setup
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+
         // ACTIONS
-        mGoToAddTaskActivityFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddTodoActivity.class);
-                startActivity(intent);
-            }
-        });
+        mGoToAddTaskActivityFab.setOnClickListener(v ->
+            startActivity(
+                new Intent(getActivity(), AddTodoActivity.class)
+            )
+        );
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.stopToDoListener();
+    }
+
+    // Retrieve data
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
 
 
     @Override
-    public void updateUI(List<ToDo> toDos) {
-        StringBuilder todoString = new StringBuilder();
-
-        for (ToDo toDo:
-             toDos) {
-            todoString.append(toDo.getTitle()).append("\n");
-        }
-
-        mResultTextView.setText(todoString);
+    public void addTodo(ToDo todo) {
+        mToDos.add(todo);
+        mAdapter.notifyItemInserted(mToDos.size());
     }
 
+    @Override
+    public void changeTodo(ToDo todo) {
+    }
+
+    @Override
+    public void removeTodo(String id) {
+        mToDos.removeIf(toDo -> toDo.getID().equals(id));
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void resetTodoList() {
+        mToDos.clear();
+    }
+
+    //  TODO: Add Progressbar
     @Override
     public void showProgressBar() {
 
