@@ -1,13 +1,10 @@
 package com.jokers.todolist.ui.home;
 
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +16,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jokers.todolist.AddTodoActivity;
 import com.jokers.todolist.R;
+import com.jokers.todolist.adapters.ToDoListAdapter;
 import com.jokers.todolist.models.ToDo;
 import com.jokers.todolist.presenters.HomeFragmentPresenter;
 
@@ -26,8 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment implements
-        HomeFragmentPresenter.View {
+public class HomeFragment extends Fragment implements HomeFragmentPresenter.View {
 
     private FloatingActionButton mGoToAddTaskActivityFab;
     private HomeFragmentPresenter mPresenter;
@@ -35,7 +32,7 @@ public class HomeFragment extends Fragment implements
     // Retrieve data
     private RecyclerView mRecyclerView;
     private List<ToDo> mToDos;
-    private HomeFragmentPresenter.ToDoListAdapter mAdapter;
+    private ToDoListAdapter mAdapter;
 
     public HomeFragment() {
         // Required empty public constructor\
@@ -67,7 +64,7 @@ public class HomeFragment extends Fragment implements
         ((SimpleItemAnimator) Objects.requireNonNull(mRecyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
 
         // Recyclerview Adapter
-        mAdapter = new HomeFragmentPresenter.ToDoListAdapter();
+        mAdapter = new ToDoListAdapter(mToDos);
 
         // Standard setup
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -127,4 +124,6 @@ public class HomeFragment extends Fragment implements
     public void hideProgressBar() {
 
     }
+
+
 }

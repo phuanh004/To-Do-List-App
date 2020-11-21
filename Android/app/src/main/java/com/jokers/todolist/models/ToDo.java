@@ -27,7 +27,10 @@ public class ToDo implements Serializable {
     //User's two attribute:
 
     @Exclude
-    private String id;
+    private String id;          // PK: To-do id
+
+    @Exclude
+    private String uid;         // FK: User id
 
     @PropertyName("title")
     private String title;
@@ -66,6 +69,11 @@ public class ToDo implements Serializable {
     @Exclude
     public String getID() {
         return this.id;
+    }
+
+    @Exclude
+    public String getUid() {
+        return uid;
     }
 
     @PropertyName("title")
@@ -111,6 +119,27 @@ public class ToDo implements Serializable {
         return null;
     }
 
+    /**
+     * Format the remaining days
+     * @return result in display format
+     */
+    @Exclude
+    public String getFormattedRemainingDays() {
+        String result = "";
+        Integer remainDays = getRemainingDays();
+
+        if (remainDays == null) { return result; }
+        else if (remainDays == 0) {
+            result = "Due today";
+        } else if (remainDays > 0) {
+            result = remainDays + " days left";
+        } else if (remainDays < 0){
+            result = Math.abs(remainDays) + " days ago";
+        }
+
+        return result;
+    }
+
     @Exclude
     public String getCurrentDate(){
         return String.valueOf(System.currentTimeMillis() / 1000L);
@@ -126,6 +155,11 @@ public class ToDo implements Serializable {
     @Exclude
     public void setID(String id) {
         this.id = id;
+    }
+
+    @Exclude
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     @PropertyName("title")

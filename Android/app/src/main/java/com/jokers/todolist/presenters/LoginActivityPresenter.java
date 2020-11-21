@@ -14,26 +14,26 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class LoginActivityPresenter implements OnCompleteListener<AuthResult> {
 
-    private View view;
+    private View mView;
     private final FirebaseAuth mAuth;
 
     public LoginActivityPresenter(FirebaseAuth mAuth, View view) {
         this.mAuth = mAuth;
-        this.view = view;
+        this.mView = view;
     }
 
     public void loginByEmail(String email, String password) {
-        view.showProgressBar();
+        mView.showProgressBar();
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this);
     }
 
     public void guestLogin() {
-        view.showProgressBar();
+        mView.showProgressBar();
         mAuth.signInAnonymously().addOnCompleteListener(this);
     }
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
-        view.hideProgressBar();
+        mView.hideProgressBar();
     }
 
     public interface View {
