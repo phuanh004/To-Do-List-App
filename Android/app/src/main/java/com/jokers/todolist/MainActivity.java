@@ -2,10 +2,7 @@ package com.jokers.todolist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -52,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
         // If user login
         // TODO: DISPLAY USER DATA
-        if (currentUser != null) {
-            Toast.makeText(this, mAuth.getUid(), Toast.LENGTH_SHORT).show();
-        }
+//        if (currentUser != null) {
+//            Toast.makeText(this, mAuth.getUid(), Toast.LENGTH_SHORT).show();
+//        }
 
         // If not, navigate user to LoginActivity
-        else {
+        if (currentUser != null){
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }

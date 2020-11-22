@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.jokers.todolist.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:name="com.jokers.todolist.fragments.LogbookFragment"
+        android:label="@string/title_logbook"
+        tools:layout="@layout/fragment_logbook" />
 
     <fragment
         android:id="@+id/navigation_notifications"
