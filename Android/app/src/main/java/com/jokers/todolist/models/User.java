@@ -26,7 +26,7 @@ public class User{
 
     }
     */
-    ArrayList<ToDo> toDoList = new ArrayList<ToDo>();
+    ArrayList<ToDo> toDoList = new ArrayList<>();
     //initalize a points system on the User:
     Points points = new Points();
 
@@ -48,7 +48,7 @@ public class User{
         this.avatar = avatar;
     }
 
-    //getter
+    // getter
     public String getId(){
         return this.id;
     }
@@ -69,7 +69,7 @@ public class User{
     }
 
 
-    //setter:
+    // setter:
     public void setId(String id){
         this.id = id;
     }

@@ -6,54 +6,53 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/dueDateTextView"
+        android:id="@+id/doneDateLogbookTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="0.5"
-        android:textColor="#d50000"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
-        android:id="@+id/toDoCheckBox"
+        android:id="@+id/toDoLogbookCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:buttonTint="@color/dark_violet_more"
-        app:layout_constraintBottom_toBottomOf="@+id/titleTv"
+        android:layout_marginTop="10dp"
+        android:checked="true"
+        app:layout_constraintBottom_toBottomOf="@+id/titleLogbookTv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/titleTv"
+        android:id="@+id/titleLogbookTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:paddingStart="0dp"
         android:paddingEnd="10dp"
-        android:textColor="@color/dark_violet_more"
-        app:layout_constraintEnd_toStartOf="@+id/dueDateTextView"
-        app:layout_constraintStart_toEndOf="@+id/toDoCheckBox"
+        app:layout_constraintEnd_toStartOf="@+id/doneDateLogbookTextView"
+        app:layout_constraintStart_toEndOf="@+id/toDoLogbookCheckBox"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/toDoSubItemGroup"
+        android:id="@+id/toDoSubItemLogbookGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="@id/rowDivider"
-        app:layout_constraintEnd_toEndOf="@+id/dueDateTextView"
-        app:layout_constraintStart_toStartOf="@+id/titleTv"
-        app:layout_constraintTop_toBottomOf="@+id/titleTv">
+        app:layout_constraintBottom_toBottomOf="@id/rowLogbookDivider"
+        app:layout_constraintEnd_toEndOf="@+id/doneDateLogbookTextView"
+        app:layout_constraintStart_toStartOf="@+id/titleLogbookTv"
+        app:layout_constraintTop_toBottomOf="@+id/titleLogbookTv">
 
         <TextView
-            android:id="@+id/descriptionExpandedTv"
+            android:id="@+id/descriptionLogbookExpandedTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
@@ -68,15 +67,14 @@
             android:paddingTop="8dp">
 
             <TextView
-                android:id="@+id/doDateExpanedTv"
+                android:id="@+id/doDateLogbookExpandedTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:textAlignment="textStart" />
 
             <TextView
-                android:id="@+id/dueDateExpandedTv"
-                android:textColor="#d50000"
+                android:id="@+id/dueDateExpandedLogbookTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -85,13 +83,13 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/rowDivider"
+        android:id="@+id/rowLogbookDivider"
         android:layout_width="0dp"
         android:layout_height="1px"
         android:background="#D3D3D3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toDoSubItemGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/toDoSubItemLogbookGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

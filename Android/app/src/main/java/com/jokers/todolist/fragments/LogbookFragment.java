@@ -1,11 +1,11 @@
-package com.jokers.todolist.ui.home;
+package com.jokers.todolist.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,38 +14,36 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.jokers.todolist.AddTodoActivity;
 import com.jokers.todolist.R;
-import com.jokers.todolist.adapters.ToDoListAdapter;
+import com.jokers.todolist.adapters.LogbookAdapter;
 import com.jokers.todolist.models.ToDo;
-import com.jokers.todolist.presenters.HomeFragmentPresenter;
+import com.jokers.todolist.presenters.LogbookFragmentPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment implements HomeFragmentPresenter.View {
 
-    private FloatingActionButton mGoToAddTaskActivityFab;
-    private HomeFragmentPresenter mPresenter;
+public class LogbookFragment extends Fragment implements LogbookFragmentPresenter.View {
+
+    private LogbookFragmentPresenter mPresenter;
 
     // Retrieve data
     private RecyclerView mRecyclerView;
     private ProgressBar mLoading;
     private List<ToDo> mToDos;
-    private ToDoListAdapter mAdapter;
+    private TextView mNoLogbookTextView;
+    private LogbookAdapter mAdapter;
 
-    public HomeFragment() {
+    public LogbookFragment() {
         // Required empty public constructor\
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (mPresenter != null) { mPresenter.startToDoListener(); }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_logbook, container, false);
     }
 
     @Override
@@ -56,33 +54,23 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
         mToDos = new ArrayList<>();
 
         // Binding view
-        mGoToAddTaskActivityFab = requireView().findViewById(R.id.goToAddTaskActivityFab);
-        mRecyclerView = requireView().findViewById(R.id.recyclerView);
-        mLoading = requireView().findViewById(R.id.toDoHomeProgressBar);
-
-        // Show progressbar
-        showProgressBar();
+        mRecyclerView = requireView().findViewById(R.id.logbookrecyclerView);
+        mLoading = requireView().findViewById(R.id.toDoLogbookProgressBar);
+        mNoLogbookTextView = requireView().findViewById(R.id.noLogbookTextView);
 
         // Declare presenter
-        mPresenter = new HomeFragmentPresenter(this);
+        mPresenter = new LogbookFragmentPresenter(this);
 
         // Removes blinks
         ((SimpleItemAnimator) Objects.requireNonNull(mRecyclerView.getItemAnimator())).setSupportsChangeAnimations(false);
 
         // Recyclerview Adapter
-        mAdapter = new ToDoListAdapter(mToDos);
+        mAdapter = new LogbookAdapter(mToDos);
 
         // Standard setup
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
-
-        // ACTIONS
-        mGoToAddTaskActivityFab.setOnClickListener(v ->
-            startActivity(
-                new Intent(getActivity(), AddTodoActivity.class)
-            )
-        );
     }
 
     @Override
@@ -113,6 +101,16 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
     }
 
     @Override
+    public void showEmptyLogbookMessage() {
+        mNoLogbookTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyLogbookMessage() {
+        mNoLogbookTextView.setVisibility(View.GONE);
+    }
+
+    @Override
     public void showProgressBar() {
         mLoading.setVisibility(View.VISIBLE);
     }
@@ -121,6 +119,4 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
     public void hideProgressBar() {
         mLoading.setVisibility(View.INVISIBLE);
     }
-
-
 }
