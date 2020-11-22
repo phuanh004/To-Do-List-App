@@ -61,7 +61,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="87dp"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
                     <TextView
@@ -87,7 +87,7 @@
                     <TextView
                         android:id="@+id/itemCounterTextView"
                         android:layout_width="match_parent"
-                        android:layout_height="36dp"
+                        android:layout_height="wrap_content"
                         android:text="Own 16 item from shop"
                         tools:layout_conversion_absoluteHeight="36dp"
                         tools:layout_conversion_absoluteWidth="141dp"
@@ -206,7 +206,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="48dp"
                 android:orientation="horizontal">
 
                 <TextView
