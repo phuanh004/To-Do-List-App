@@ -27,6 +27,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/editToDoButton"
+        style="@android:style/Widget.Material.Button.Borderless.Small"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="#00FFFFFF"
+        android:drawableEnd="@drawable/ic_create"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/titleTv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleTv" />
+
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="0dp"
@@ -81,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:textAlignment="textEnd" />
+
         </LinearLayout>
     </LinearLayout>
 

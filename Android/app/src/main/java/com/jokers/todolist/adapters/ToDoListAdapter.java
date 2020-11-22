@@ -2,9 +2,12 @@ package com.jokers.todolist.adapters;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -35,11 +38,11 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
         private final TextView mDoDay;
         private final android.view.View mDivider;
         private final CheckBox mToDoCheckBox;
+        private final Button mEditToDoButton;
 
         public MyViewHolder(@NonNull android.view.View itemView) {
             super(itemView);
 
-            // TODO: Add remains folder
             mTaskTextView = itemView.findViewById(R.id.titleTv);
             mDescriptionTexView = itemView.findViewById(R.id.descriptionExpandedTv);
             mDueDateTextView = itemView.findViewById(R.id.dueDateTextView);
@@ -47,6 +50,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
             mDoDay = itemView.findViewById(R.id.doDateExpanedTv);
             mDivider = itemView.findViewById(R.id.toDoSubItemGroup);
             mToDoCheckBox = itemView.findViewById(R.id.toDoCheckBox);
+            mEditToDoButton = itemView.findViewById(R.id.editToDoButton);
         }
 
         @SuppressLint("SetTextI18n")
@@ -61,6 +65,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
             );
 
             mDueDateTextView.setVisibility(toDo.isExpanded() ? android.view.View.GONE : android.view.View.VISIBLE);
+            mEditToDoButton.setVisibility(toDo.isExpanded() ? View.VISIBLE : View.GONE);
             mDivider.setVisibility(toDo.isExpanded() ? android.view.View.VISIBLE : android.view.View.GONE);
         }
 
@@ -122,6 +127,18 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
 
             // Uncheck the box
             holder.mToDoCheckBox.toggle();
+        });
+
+        holder.mEditToDoButton.setOnClickListener(v -> {
+            // TODO: DELETE this test note
+            // Toast.makeText(v.getContext(), toDos.get(position).getID(), Toast.LENGTH_SHORT).show();
+
+            // TODO: ADD GO TO EDIT ACTIVITY HERE
+            // Intent intent = new Intent (v.getContext(), EditToDoActivity.class);
+            // sent bundle
+            // intent.putExtra("toDoId", toDos.get(position).getID());
+            // startActivity(intent);
+
         });
     }
 

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.LogbookFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ProgressBar
         android:id="@+id/toDoLogbookProgressBar"
         android:layout_width="wrap_content"
