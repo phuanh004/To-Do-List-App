@@ -35,6 +35,7 @@ public class AddTodoActivity extends AppCompatActivity
     private TextView mWhenTextView, mDueDateTextView;
     private ProgressBar mLoadingProgressBar;
 
+
     private ToDo mToDo;
     private String mDate;
     private DateDialogOf currentDateDialog;

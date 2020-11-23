@@ -1,6 +1,7 @@
 package com.jokers.todolist.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jokers.todolist.EditToDoActivity;
 import com.jokers.todolist.R;
 import com.jokers.todolist.models.ToDo;
 
@@ -131,13 +133,13 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
 
         holder.mEditToDoButton.setOnClickListener(v -> {
             // TODO: DELETE this test note
-            // Toast.makeText(v.getContext(), toDos.get(position).getID(), Toast.LENGTH_SHORT).show();
+             Toast.makeText(v.getContext(), toDos.get(position).getID(), Toast.LENGTH_SHORT).show();
 
             // TODO: ADD GO TO EDIT ACTIVITY HERE
-            // Intent intent = new Intent (v.getContext(), EditToDoActivity.class);
+             Intent intent = new Intent(v.getContext(), EditToDoActivity.class);
             // sent bundle
-            // intent.putExtra("toDoId", toDos.get(position).getID());
-            // startActivity(intent);
+            intent.putExtra("toDoId", toDos.get(position).getID());
+            v.getContext().startActivity(intent);
 
         });
     }
