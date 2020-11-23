@@ -17,6 +17,8 @@ import com.jokers.todolist.models.ToDo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 public class HomeFragmentPresenter implements
         FirebaseAuth.AuthStateListener,
@@ -58,7 +60,24 @@ public class HomeFragmentPresenter implements
 
     @Override
     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//        Log.d("TAG", "onChildChanged: " + snapshot.getKey());
+//        Log.d("TAG", "onChildChanged: " + previousChildName);
+
+        ToDo toDo = snapshot.getValue(ToDo.class);
+        assert toDo != null;
+        toDo.setID(snapshot.getKey());
+        toDo.setUid(mAuth.getUid());
+
+        assert previousChildName != null;
+        int index = IntStream.range(0, toDos.size())
+                .filter(i -> previousChildName.equals(toDos.get(i).getID()))
+                .findFirst().orElse(-1);
+
+        int pos = index != -1 ? (index + 1) : index;
+
+        if (pos != -1) {
+            toDos.set(pos, toDo);
+            mView.changeTodo(pos, toDo);
+        }
     }
 
     @Override
@@ -118,7 +137,7 @@ public class HomeFragmentPresenter implements
 
     public interface View {
         void addTodo(ToDo todo);
-        void changeTodo(ToDo todo);
+        void changeTodo(int pos, ToDo todo);
         void removeTodo(String todoId);
         void resetTodoList();
         void showProgressBar();

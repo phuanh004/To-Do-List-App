@@ -98,7 +98,9 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
     }
 
     @Override
-    public void changeTodo(ToDo todo) {
+    public void changeTodo(int pos, ToDo todo) {
+        mToDos.set(pos, todo);
+        mAdapter.notifyItemChanged(pos);
     }
 
     @Override
