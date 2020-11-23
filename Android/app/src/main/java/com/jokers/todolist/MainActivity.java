@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
 
         // If user login
         // TODO: DISPLAY USER DATA
-//        if (currentUser != null) {
+        if (currentUser != null) {
 //            Toast.makeText(this, mAuth.getUid(), Toast.LENGTH_SHORT).show();
-//        }
+        }
 
         // If not, navigate user to LoginActivity
-        if (currentUser != null){
+        else {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         }
