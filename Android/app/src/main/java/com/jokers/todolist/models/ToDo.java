@@ -20,14 +20,16 @@ import java.util.Locale;
  * Purpose: Task class initialized by user class;
  *
  * @author Guan Li
+ * @author Anh Pham
  */
 
 @IgnoreExtraProperties
 public class ToDo implements Serializable {
-    //User's two attribute:
+    @Exclude
+    private String id;                  // PK: To-do id
 
     @Exclude
-    private String id;
+    private String uid;                 // FK: User id
 
     @PropertyName("title")
     private String title;
@@ -44,8 +46,11 @@ public class ToDo implements Serializable {
     @PropertyName("do_date")
     private String doDate;
 
+    @PropertyName("done_date")
+    private String doneDate;
+
     @Exclude
-    private boolean expanded;                   // Use for the recyclerview
+    private boolean expanded;           // Use for the recyclerview
 
 //    @PropertyName("tags")
     private List<Tag> tags = null;
@@ -66,6 +71,11 @@ public class ToDo implements Serializable {
     @Exclude
     public String getID() {
         return this.id;
+    }
+
+    @Exclude
+    public String getUid() {
+        return uid;
     }
 
     @PropertyName("title")
@@ -93,6 +103,11 @@ public class ToDo implements Serializable {
         return doDate;
     }
 
+    @PropertyName("done_date")
+    public String getDoneDate() {
+        return doneDate;
+    }
+
     /**
      * Calculate date remaining for due date
      * @return date remaining
@@ -111,6 +126,59 @@ public class ToDo implements Serializable {
         return null;
     }
 
+    /**
+     * Format the remaining days
+     * @return result in display format
+     */
+    @Exclude
+    public String getFormattedRemainingDays() {
+        String result = "";
+        Integer remainDays = getRemainingDays();
+
+        if (remainDays == null) { return result; }
+        else if (remainDays == 0) {
+            result = "Due today";
+        } else if (remainDays > 0) {
+            result = remainDays + " days left";
+        } else if (remainDays < 0){
+            result = Math.abs(remainDays) + " days ago";
+        }
+
+        return result;
+    }
+
+    @Exclude
+    public boolean isExpanded(){
+        return this.expanded;
+    }
+
+    /**
+     * All type
+     *
+     * @param format
+     * type:
+     *      "yyyy.MM.dd G 'at' HH:mm:ss z" ---- 2001.07.04 AD at 12:08:56 PDT
+     *      "hh 'o''clock' a, zzzz" ----------- 12 o'clock PM, Pacific Daylight Time
+     *      "EEE, d MMM yyyy HH:mm:ss Z"------- Wed, 4 Jul 2001 12:08:56 -0700
+     *      "yyyy-MM-dd'T'HH:mm:ss.SSSZ"------- 2001-07-04T12:08:56.235-0700
+     *      "yyMMddHHmmssZ"-------------------- 010704120856-0700
+     *      "K:mm a, z" ----------------------- 0:08 PM, PDT
+     *      "h:mm a" -------------------------- 12:08 PM
+     *      "EEE, MMM d, ''yy" ---------------- Wed, Jul 4, '01
+     *
+     * @return a String for display
+     */
+    @Exclude
+    public String getDateInDisplayFormat(String format, String unixTime) {
+        if (unixTime == null) {
+            return "";
+        }
+        DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
+        Date date = new Date(Long.parseLong(unixTime) * 1000L);
+
+        return df.format(date);
+    }
+
     @Exclude
     public String getCurrentDate(){
         return String.valueOf(System.currentTimeMillis() / 1000L);
@@ -126,6 +194,11 @@ public class ToDo implements Serializable {
     @Exclude
     public void setID(String id) {
         this.id = id;
+    }
+
+    @Exclude
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     @PropertyName("title")
@@ -153,36 +226,9 @@ public class ToDo implements Serializable {
         this.doDate = doDate;
     }
 
-    @Exclude
-    public boolean isExpanded(){
-        return this.expanded;
-    }
-
-    /**
-     * All type
-     *
-     * @param format
-     * type:
-     *      "yyyy.MM.dd G 'at' HH:mm:ss z" ---- 2001.07.04 AD at 12:08:56 PDT
-     *      "hh 'o''clock' a, zzzz" ----------- 12 o'clock PM, Pacific Daylight Time
-     *      "EEE, d MMM yyyy HH:mm:ss Z"------- Wed, 4 Jul 2001 12:08:56 -0700
-     *      "yyyy-MM-dd'T'HH:mm:ss.SSSZ"------- 2001-07-04T12:08:56.235-0700
-     *      "yyMMddHHmmssZ"-------------------- 010704120856-0700
-     *      "K:mm a, z" ----------------------- 0:08 PM, PDT
-     *      "h:mm a" -------------------------- 12:08 PM
-     *      "EEE, MMM d, ''yy" ---------------- Wed, Jul 4, '01
-     *
-     * @return a String for display
-     */
-    @Exclude
-    public String getDateInDisplayFormat(String format, String unixTime) {
-       if (unixTime == null) {
-           return "";
-       }
-        DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
-        Date date = new Date(Long.parseLong(unixTime) * 1000L);
-
-        return df.format(date);
+    @PropertyName("done_date")
+    public void setDoneDate(String doneDate) {
+        this.doneDate = doneDate;
     }
 
     /**

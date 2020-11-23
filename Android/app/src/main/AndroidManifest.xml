@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".EditToDoActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".AddTodoActivity"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".SignUpActivity" />

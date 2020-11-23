@@ -1,14 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.settings.SettingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:layout_editor_absoluteX="64dp"
+        tools:layout_editor_absoluteY="40dp">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/wariningMSGFIller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="At Current State there will be some fillers"
+                tools:layout_conversion_absoluteHeight="19dp"
+                tools:layout_conversion_absoluteWidth="256dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="283dp" />
+
+            <TextView
+                android:id="@+id/titleUserProfileTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Profile:"
+                android:textColor="@color/black_overlay"
+                android:textColorHighlight="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:textSize="20dp"
+                android:textStyle="bold|italic"
+                tools:layout_conversion_absoluteHeight="0dp"
+                tools:layout_conversion_absoluteWidth="0dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/profilePicFAB"
+                    android:layout_width="83dp"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:src="@drawable/common_google_signin_btn_icon_dark"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="61dp"
+                    tools:layout_editor_absoluteY="72dp"
+                    tools:src="@tools:sample/avatars" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/userNametextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="29dp"
+                        android:text="Name: Steve XXX"
+                        tools:layout_conversion_absoluteHeight="0dp"
+                        tools:layout_conversion_absoluteWidth="0dp"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="72dp" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Current Points: 999"
+                        tools:layout_conversion_absoluteHeight="0dp"
+                        tools:layout_conversion_absoluteWidth="0dp"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="313dp" />
+
+                    <TextView
+                        android:id="@+id/itemCounterTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Own 16 item from shop"
+                        tools:layout_conversion_absoluteHeight="36dp"
+                        tools:layout_conversion_absoluteWidth="141dp"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="214dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/checkDataButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check Data"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="72dp" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check Progress"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="200dp" />
+
+                <Button
+                    android:id="@+id/checkProfileButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Check Profile"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="313dp" />
+
+                <Button
+                    android:id="@+id/accessShopButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Access Shop"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="313dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/resetTaskButton"
+                    android:layout_width="319dp"
+                    android:layout_height="match_parent"
+                    android:text="Reset Task"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="320dp" />
+
+                <Button
+                    android:id="@+id/resetShopButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="62dp"
+                    android:text="Reset Shop"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="61dp"
+                    tools:layout_editor_absoluteY="133dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/resetPointsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reset Points"
+                    android:textSize="20dp"
+                    android:textStyle="normal|bold|italic"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="260dp" />
+
+                <TextView
+                    android:id="@+id/spaceFillerTextView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dp"
+                    android:layout_weight="1" />
+
+                <Switch
+                    android:id="@+id/resetPointsSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Switch"
+                    tools:layout_conversion_absoluteHeight="27dp"
+                    tools:layout_conversion_absoluteWidth="88dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="151dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nightModeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Night Mode"
+                    android:textSize="20dp"
+                    android:textStyle="normal|bold|italic"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="313dp" />
+
+                <TextView
+                    android:id="@+id/spaceFillerTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dp"
+                    android:layout_weight="1" />
+
+                <Switch
+                    android:id="@+id/nightModeSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Switch"
+                    tools:layout_conversion_absoluteHeight="27dp"
+                    tools:layout_conversion_absoluteWidth="88dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/logOutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log Out"
+                tools:layout_conversion_absoluteHeight="0dp"
+                tools:layout_conversion_absoluteWidth="0dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

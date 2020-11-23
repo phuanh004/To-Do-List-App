@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">To Do List</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_home">To Do</string>
+    <string name="title_logbook">Logbook</string>
     <string name="title_notifications">Notifications</string>
     <string name="settings">Settings</string>
 
@@ -27,4 +27,5 @@
     <string name="settings_logout_title">Log out</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="your_logbook_is_empty">Your logbook is empty</string>
 </resources>

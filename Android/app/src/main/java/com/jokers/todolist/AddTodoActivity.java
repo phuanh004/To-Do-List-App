@@ -35,6 +35,7 @@ public class AddTodoActivity extends AppCompatActivity
     private TextView mWhenTextView, mDueDateTextView;
     private ProgressBar mLoadingProgressBar;
 
+
     private ToDo mToDo;
     private String mDate;
     private DateDialogOf currentDateDialog;
@@ -123,16 +124,16 @@ public class AddTodoActivity extends AppCompatActivity
                         case DUE_DATE:
                             mToDo.setDueDate(mDate);
                             mDueDateTextView.setText(
-                                    "Deadline: " +
-                                    mToDo
-                                    .getDateInDisplayFormat("EEE, MMM d", mToDo.getDueDate()));
+                                "Deadline: " +
+                                mToDo.getDateInDisplayFormat("EEE, MMM d", mToDo.getDueDate())
+                            );
                             break;
                         case DO_DATE:
                             mToDo.setDoDate(mDate);
                             mWhenTextView.setText(
-                                    "Do it on: " +
-                                    mToDo
-                                    .getDateInDisplayFormat("EEE, MMM d", mToDo.getDoDate()));
+                                "Do it on: " +
+                                mToDo.getDateInDisplayFormat("EEE, MMM d", mToDo.getDoDate())
+                            );
                     }
 
                 } catch (ParseException e) {
