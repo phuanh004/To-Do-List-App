@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "525055075239",
+    "firebase_url": "https://final-to-do-lsit.firebaseio.com",
+    "project_id": "final-to-do-lsit",
+    "storage_bucket": "final-to-do-lsit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:525055075239:android:6b8e522108570468628c82",
+        "android_client_info": {
+          "package_name": "com.example.finaltodolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "525055075239-j3u7qoq9jaj0ov18cdd5dpcojaam5o40.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finaltodolist",
+            "certificate_hash": "ba9685c6d45e78894e1ff59806da19848e5f56c7"
+          }
+        },
+        {
+          "client_id": "525055075239-nsof2b0lejhbdvq44apcdkdt3cobpoct.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGdl6gVDgzXL77omixFsdvvPFT2DqsoU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "525055075239-nsof2b0lejhbdvq44apcdkdt3cobpoct.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
