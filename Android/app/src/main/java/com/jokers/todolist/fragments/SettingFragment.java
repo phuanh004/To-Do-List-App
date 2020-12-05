@@ -1,5 +1,6 @@
-package com.jokers.todolist.ui.settings;
+package com.jokers.todolist.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,12 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jokers.todolist.LoginActivity;
 import com.jokers.todolist.R;
-import com.jokers.todolist.adapters.ToDoListAdapter;
 
 public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateListener {
 
@@ -25,6 +26,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
 
     // Declare view ids
     private Button mLogOutButton;
+    private TextView mUserNameTextView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -35,9 +37,17 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
 
         // Binding view
         mLogOutButton = requireView().findViewById(R.id.logOutButton);
+        mUserNameTextView = requireView().findViewById(R.id.userNameTextView);
 
         // ACTIONS
-        mLogOutButton.setOnClickListener(v -> mAuth.signOut());
+        mLogOutButton.setOnClickListener(v -> {
+            // If anonymous user, delete it before sign out
+            if (mAuth.getCurrentUser().isAnonymous()) {
+                mAuth.getCurrentUser().delete();
+            }
+
+            mAuth.signOut();
+        });
     }
 
     @Override
@@ -52,6 +62,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         return inflater.inflate(R.layout.fragment_setting, container, false);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
         // Get current user from FirebaseAuth
@@ -60,7 +71,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         // If user login
         if (currentUser != null) {
             // TODO: DISPLAY USER DATA
-//            Toast.makeText(this, mAuth.getUid(), Toast.LENGTH_SHORT).show();
+            mUserNameTextView.setText("Name: " + currentUser.getDisplayName());
         }
 
         // If not, navigate user to LoginActivity

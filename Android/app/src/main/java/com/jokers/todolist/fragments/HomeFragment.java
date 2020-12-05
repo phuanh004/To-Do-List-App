@@ -1,4 +1,4 @@
-package com.jokers.todolist.ui.home;
+package com.jokers.todolist.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;

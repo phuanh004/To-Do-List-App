@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingFragment">
+    tools:context=".fragments.SettingFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,17 +17,8 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/wariningMSGFIller"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="At Current State there will be some fillers"
-                tools:layout_conversion_absoluteHeight="19dp"
-                tools:layout_conversion_absoluteWidth="256dp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="283dp" />
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
 
             <TextView
                 android:id="@+id/titleUserProfileTextView"
@@ -65,7 +56,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/userNametextView"
+                        android:id="@+id/userNameTextView"
                         android:layout_width="match_parent"
                         android:layout_height="29dp"
                         android:text="Name: Steve XXX"

@@ -1,4 +1,4 @@
-package com.jokers.todolist.ui.notifications;
+package com.jokers.todolist.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
