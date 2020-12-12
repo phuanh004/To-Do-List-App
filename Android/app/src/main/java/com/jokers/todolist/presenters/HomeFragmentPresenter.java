@@ -25,14 +25,14 @@ public class HomeFragmentPresenter implements
         ChildEventListener,
         OnSuccessListener<Void> {
 
-    private List<ToDo> toDos;
+    private final List<ToDo> toDos;
 
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+    private final DatabaseReference mDatabase;
+    private final FirebaseAuth mAuth;
     private DatabaseReference mTodosRef = null;
     private boolean loaded;
 
-    private View mView;
+    private final View mView;
 
     public HomeFragmentPresenter(View view) {
         mDatabase = FirebaseDatabase.getInstance().getReference();                      // initialize Firebase Realtime Database

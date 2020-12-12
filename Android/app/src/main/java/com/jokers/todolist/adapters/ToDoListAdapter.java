@@ -23,11 +23,13 @@ import com.jokers.todolist.models.ToDo;
 import java.util.List;
 
 /**
- * Adapter
+ * Adapter for to do list recyclerview
+ *
+ * @author Anh Pham
  */
 public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyViewHolder>{
 
-    private List<ToDo> toDos;
+    private final List<ToDo> toDos;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and

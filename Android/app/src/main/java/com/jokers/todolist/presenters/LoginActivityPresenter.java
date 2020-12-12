@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class LoginActivityPresenter implements OnCompleteListener<AuthResult> {
 
-    private View mView;
+    private final View mView;
     private final FirebaseAuth mAuth;
 
     public LoginActivityPresenter(FirebaseAuth mAuth, View view) {

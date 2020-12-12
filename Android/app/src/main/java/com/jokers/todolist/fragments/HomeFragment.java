@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * To do list fragment
+ *
+ * @author Anh Pham
+ */
 public class HomeFragment extends Fragment implements HomeFragmentPresenter.View {
 
     private FloatingActionButton mGoToAddTaskActivityFab;

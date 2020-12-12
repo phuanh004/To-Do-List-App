@@ -36,7 +36,7 @@ public class LogbookFragment extends Fragment implements LogbookFragmentPresente
     private LogbookAdapter mAdapter;
 
     public LogbookFragment() {
-        // Required empty public constructor\
+        // Required empty public constructor
     }
 
     @Override

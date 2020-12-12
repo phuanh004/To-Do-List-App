@@ -19,13 +19,13 @@ public class LogbookFragmentPresenter implements
         FirebaseAuth.AuthStateListener,
         ChildEventListener {
 
-    private List<ToDo> toDos;
+    private final List<ToDo> toDos;
 
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+    private final DatabaseReference mDatabase;
+    private final FirebaseAuth mAuth;
     private DatabaseReference mLogbookRef = null;
 
-    private View mView;
+    private final View mView;
 
     public LogbookFragmentPresenter(View view) {
         mDatabase = FirebaseDatabase.getInstance().getReference();                      // initialize Firebase Realtime Database
