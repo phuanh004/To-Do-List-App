@@ -87,6 +87,8 @@ public class EditToDoActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get ToDo object and use the values to update the UI
                 mToDo = dataSnapshot.getValue(ToDo.class);
+                if (mToDo == null) { return; }
+
                 mToDo.setID(dataSnapshot.getKey());
                 mToDo.setUid(mAuth.getUid());
 

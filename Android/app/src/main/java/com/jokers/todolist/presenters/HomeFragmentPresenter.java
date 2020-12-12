@@ -63,21 +63,36 @@ public class HomeFragmentPresenter implements
 //        Log.d("TAG", "onChildChanged: " + previousChildName);
 
         ToDo toDo = snapshot.getValue(ToDo.class);
-        assert toDo != null;
+
+        if (toDo == null ) { return; }
+
         toDo.setID(snapshot.getKey());
         toDo.setUid(mAuth.getUid());
 
-        assert previousChildName != null;
-        int index = IntStream.range(0, toDos.size())
-                .filter(i -> previousChildName.equals(toDos.get(i).getID()))
-                .findFirst().orElse(-1);
+        Log.d("TAG", "onChildChanged: "  + snapshot.getKey());
 
-        int pos = index != -1 ? (index + 1) : index;
+        int index;
+        int pos;
+
+        if (previousChildName != null) {
+             index = IntStream.range(0, toDos.size())
+                    .filter(i -> previousChildName.equals(toDos.get(i).getID()))
+                    .findFirst().orElse(-1);
+
+            pos = index != -1 ? (index + 1) : index;
+        } else {
+            index = IntStream.range(0, toDos.size())
+                    .filter(i -> toDos.get(i).getID().equals(toDo.getID()))
+                    .findFirst().orElse(-1);
+
+            pos = index;
+        }
 
         if (pos != -1) {
             toDos.set(pos, toDo);
             mView.changeTodo(pos, toDo);
         }
+
     }
 
     @Override

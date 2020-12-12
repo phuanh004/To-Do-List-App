@@ -33,10 +33,15 @@ public class LoginActivityPresenter implements OnCompleteListener<AuthResult> {
     }
     @Override
     public void onComplete(@NonNull Task<AuthResult> task) {
+        if (!task.isSuccessful()) {
+            mView.showFailedMessage();
+        }
+
         mView.hideProgressBar();
     }
 
     public interface View {
+        void showFailedMessage();
         void showProgressBar();
         void hideProgressBar();
     }

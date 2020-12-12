@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.jokers.todolist.LoginActivity;
 import com.jokers.todolist.R;
 
+import java.util.Objects;
+
 public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateListener {
 
     // Declare an instance of FirebaseAuth
@@ -42,7 +44,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         // ACTIONS
         mLogOutButton.setOnClickListener(v -> {
             // If anonymous user, delete it before sign out
-            if (mAuth.getCurrentUser().isAnonymous()) {
+            if (Objects.requireNonNull(mAuth.getCurrentUser()).isAnonymous()) {
                 mAuth.getCurrentUser().delete();
             }
 
