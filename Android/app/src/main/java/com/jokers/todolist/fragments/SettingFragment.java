@@ -84,7 +84,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
 
         // If user login
         if (currentUser != null) {
-            // TODO: DISPLAY USER DATA
+            // Update name
             mUserNameTextView.setText("Name: " + currentUser.getDisplayName());
 
             // Update user's points
@@ -93,7 +93,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         }
 
         // If not, navigate user to LoginActivity
-        else {
+        else if (getContext() != null){
             Intent loginIntent = new Intent(getContext(), LoginActivity.class);
             startActivity(loginIntent);
         }
