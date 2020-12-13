@@ -14,7 +14,7 @@
         android:layout_weight="0.5"
         android:textColor="#d50000"
         android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hasDocumentIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
@@ -39,6 +39,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/titleTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/titleTv" />
+
+    <TextView
+        android:id="@+id/hasDocumentIcon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/titleTv"
+        app:layout_constraintEnd_toStartOf="@+id/editToDoButton"
+        app:layout_constraintTop_toTopOf="@+id/titleTv"
+        app:layout_constraintVertical_bias="0.482"
+        app:drawableEndCompat="@drawable/ic_document" />
 
     <TextView
         android:id="@+id/titleTv"

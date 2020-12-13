@@ -40,6 +40,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
         private final TextView mDescriptionTexView;
         private final TextView mDueDateTextView, mDueDateExpandedTextView;
         private final TextView mDoDay;
+        private final TextView mHasDocumentIcon;
         private final android.view.View mDivider;
         private final CheckBox mToDoCheckBox;
         private final Button mEditToDoButton;
@@ -52,6 +53,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
             mDueDateTextView = itemView.findViewById(R.id.dueDateTextView);
             mDueDateExpandedTextView = itemView.findViewById(R.id.dueDateExpandedTv);
             mDoDay = itemView.findViewById(R.id.doDateExpanedTv);
+            mHasDocumentIcon = itemView.findViewById(R.id.hasDocumentIcon);
             mDivider = itemView.findViewById(R.id.toDoSubItemGroup);
             mToDoCheckBox = itemView.findViewById(R.id.toDoCheckBox);
             mEditToDoButton = itemView.findViewById(R.id.editToDoButton);
@@ -67,6 +69,10 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
                     (toDo.getDueDate() == null) ?
                             "" : "Deadline: " + toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDueDate())
             );
+
+            if (!toDo.getDescription().equals("")) {
+                mHasDocumentIcon.setVisibility(toDo.isExpanded() ? android.view.View.GONE : android.view.View.VISIBLE);
+            }
 
             mDueDateTextView.setVisibility(toDo.isExpanded() ? android.view.View.GONE : android.view.View.VISIBLE);
             mEditToDoButton.setVisibility(toDo.isExpanded() ? View.VISIBLE : View.GONE);
