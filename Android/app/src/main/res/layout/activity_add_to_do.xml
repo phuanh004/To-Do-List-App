@@ -30,7 +30,7 @@
         android:ems="10"
         android:hint="Description"
         android:inputType="textMultiLine|text"
-        android:textColor="@color/backgroundColor"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

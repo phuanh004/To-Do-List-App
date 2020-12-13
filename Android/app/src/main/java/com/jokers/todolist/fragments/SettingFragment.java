@@ -9,10 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,11 +23,20 @@ import com.jokers.todolist.LoginActivity;
 import com.jokers.todolist.R;
 import com.jokers.todolist.models.Point;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
+
+/**
+ * Notification fragment
+ *
+ * @author Guan Li
+ * @author Anh Pham
+ */
 
 public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateListener {
 
-    // P
+    //user Points
     Point point;
 
     // Declare an instance of FirebaseAuth
@@ -41,7 +48,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
     private Switch nightModeSwt;
     private SharedPreferences mPreferences;
     private SharedPreferences nightPreferences;
-    private TextView mUserNameTextView, mPointCounterTextView;
+    private TextView mUserNameTextView, mPointCounterTextView, mUserRankTextView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -51,8 +58,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         mPreferences = requireActivity().getSharedPreferences("points", Context.MODE_PRIVATE);
         nightPreferences = requireActivity().getSharedPreferences("nightMode", Context.MODE_PRIVATE);
 
-
-
+        //new point
         point = new Point();
 
         // Setup Firebase auth
@@ -60,10 +66,10 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         mAuth.addAuthStateListener(this);
 
         // Binding view
-
         mLogOutButton = requireView().findViewById(R.id.logOutButton);
         mUserNameTextView = requireView().findViewById(R.id.userNameTextView);
         mPointCounterTextView = requireView().findViewById(R.id.pointCounterTextView);
+        mUserRankTextView = requireView().findViewById(R.id.rankTextView);
         nightModeSwt = requireView().findViewById(R.id.nightModeSwitch);
 
         if (isNightMode != null)
@@ -82,10 +88,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
             mAuth.signOut();
         });
 
-
-
-
-
+        //nightmode
         nightModeSwt.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (nightModeSwt.isChecked()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -103,9 +106,6 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
             }
         });
     }
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,6 +133,17 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
             // Update user's points
             loadPoints();
             mPointCounterTextView.setText("Current points: " + point.getPoints());
+
+            //Update the User's Rank (Motavation):
+            ArrayList<String> rank = new ArrayList<String>(Arrays.asList("New User","Good job","Awesome","Wonderful", "Your positivity is infectious",
+                                                                            "proud of yourself","You’re amazing!",
+                                                                            "lv1 Organization skill", "lv2 Organization skill",
+                                                                            "lv3 Organization skill","lv4 Organization skill",
+                                                                            "lv5 Organization skill", "God Organization skill",
+                                                                            "lv1 Awesomeness", "lv2 Awesomeness",
+                                                                            "lv3 Awesomeness","lv4 Awesomeness",
+                                                                            "lv5 Awesomeness", "God lv Awesomeness"));
+            mUserRankTextView.setText("Rank: " + rank.get(loadRank(point.getPoints())));
         }
 
         // If not, navigate user to LoginActivity
@@ -146,5 +157,10 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         int p = mPreferences.getInt("total", 0);    // Point
         point.setPoints(p);
     }
+
+    private int loadRank(int points){
+        return points / 3;
+    }
+
 }
 

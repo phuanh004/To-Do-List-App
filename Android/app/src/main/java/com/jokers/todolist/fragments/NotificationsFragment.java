@@ -49,7 +49,7 @@ public class NotificationsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mNotificationRecyclerView = (RecyclerView) view.findViewById(R.id.notificationRecyclerView);
+        mNotificationRecyclerView = view.findViewById(R.id.notificationRecyclerView);
 
         // New list
         mToDos = new ArrayList<>();
