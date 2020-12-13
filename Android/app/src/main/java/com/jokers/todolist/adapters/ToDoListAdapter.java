@@ -140,10 +140,6 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
         });
 
         holder.mEditToDoButton.setOnClickListener(v -> {
-            // TODO: DELETE this test note
-             Toast.makeText(v.getContext(), toDos.get(position).getID(), Toast.LENGTH_SHORT).show();
-
-            // TODO: ADD GO TO EDIT ACTIVITY HERE
              Intent intent = new Intent(v.getContext(), EditToDoActivity.class);
             // sent bundle
             intent.putExtra("toDoId", toDos.get(position).getID());
@@ -155,9 +151,5 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
     @Override
     public int getItemCount() {
         return toDos.size();
-    }
-
-    private void removeToDo(){
-
     }
 }

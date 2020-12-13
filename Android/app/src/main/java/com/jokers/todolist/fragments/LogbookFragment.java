@@ -23,7 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
+/**
+ * Logbook fragment
+ *
+ * @author Anh Pham
+ */
 public class LogbookFragment extends Fragment implements LogbookFragmentPresenter.View {
 
     private LogbookFragmentPresenter mPresenter;

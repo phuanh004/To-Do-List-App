@@ -3,14 +3,18 @@ package com.jokers.todolist;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,11 +38,12 @@ public class EditToDoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private AddToDoActivityPresenter mPresenter;
     private EditText mEditTitle, mEditDescription;
+    private ConstraintLayout mConstrainlayout;
     private Button mUpdateBtn, mEditWhenBtn, mEditDueDateBtn;
     private TextView mUpdatedWhenTodoTextView, mUpdatedDueDateTodoTextView;
     private ProgressBar mLoadingProgressBar;
+    private Button mDeleteBtn;
     private ToDo mToDo;
     private String mDate;
 
@@ -53,11 +58,13 @@ public class EditToDoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_to_do);
 
+        mConstrainlayout = findViewById(R.id.editTodoLayout);
         mEditTitle = findViewById(R.id.editTitle);
         mEditDescription = findViewById(R.id.editDescription);
         mUpdateBtn = findViewById(R.id.updateBtn);
         mEditWhenBtn = findViewById(R.id.editWhenBtn);
         mEditDueDateBtn = findViewById(R.id.editDueDateBtn);
+        mDeleteBtn = findViewById(R.id.deleteTodoBtn);
         mUpdatedWhenTodoTextView = findViewById(R.id.updatedWhenToDoTextView);
         mUpdatedDueDateTodoTextView = findViewById(R.id.updatedDueDateToDoTextView);
         mLoadingProgressBar = findViewById(R.id.updateToDoLoading);
@@ -123,6 +130,17 @@ public class EditToDoActivity extends AppCompatActivity {
                     // Set value to firebase
                     mTodosRef.setValue(mToDo);
                 });
+
+                // Click delete btn
+                mDeleteBtn.setOnClickListener(v -> {
+                    Snackbar mySnackbar = Snackbar.make(mConstrainlayout,
+                            "Are you sure to delete this to-do?", Snackbar.LENGTH_SHORT);
+                    mySnackbar.setAction("Delete", v1 -> mTodosRef.removeValue());
+                    mySnackbar.show();
+
+                    // Show success message
+                    Toast.makeText(EditToDoActivity.this, "Success !", Toast.LENGTH_SHORT).show();
+                });
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -131,7 +149,6 @@ public class EditToDoActivity extends AppCompatActivity {
 
         mTodosRef.addValueEventListener(postListener);
     }
-
 
     public void showDateTimeDialog() {
         // Declare calendar for date picker
