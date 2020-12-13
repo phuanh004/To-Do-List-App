@@ -36,9 +36,11 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
     private FirebaseAuth mAuth;
 
     // Declare view ids
+    private Boolean isNightMode = null;
     private Button mLogOutButton;
     private Switch nightModeSwt;
     private SharedPreferences mPreferences;
+    private SharedPreferences nightPreferences;
     private TextView mUserNameTextView, mPointCounterTextView;
 
     @Override
@@ -47,6 +49,10 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
 
         // Setup the points on shared preferences for updateTotalPoint()
         mPreferences = requireActivity().getSharedPreferences("points", Context.MODE_PRIVATE);
+        nightPreferences = requireActivity().getSharedPreferences("nightMode", Context.MODE_PRIVATE);
+
+
+
         point = new Point();
 
         // Setup Firebase auth
@@ -54,9 +60,18 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         mAuth.addAuthStateListener(this);
 
         // Binding view
+
         mLogOutButton = requireView().findViewById(R.id.logOutButton);
         mUserNameTextView = requireView().findViewById(R.id.userNameTextView);
         mPointCounterTextView = requireView().findViewById(R.id.pointCounterTextView);
+        nightModeSwt = requireView().findViewById(R.id.nightModeSwitch);
+
+        if (isNightMode != null)
+        {
+            // Read the value from setting pref
+            isNightMode = nightPreferences.getBoolean("isDark",  false);
+            nightModeSwt.setChecked(isNightMode);
+        }
 
         // ACTIONS
         mLogOutButton.setOnClickListener(v -> {
@@ -69,14 +84,22 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
 
 
 
-        nightModeSwt = requireView().findViewById(R.id.nightModeSwitch);
+
 
         nightModeSwt.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (nightModeSwt.isChecked()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                isNightMode = true;
+                SharedPreferences.Editor editor = nightPreferences.edit();
+                editor.putBoolean("isDark", isNightMode);
+                editor.apply();
             }
             else{
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                isNightMode = false;
+                SharedPreferences.Editor editor = nightPreferences.edit();
+                editor.putBoolean("isDark", isNightMode);
+                editor.apply();
             }
         });
     }
@@ -124,3 +147,4 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         point.setPoints(p);
     }
 }
+
