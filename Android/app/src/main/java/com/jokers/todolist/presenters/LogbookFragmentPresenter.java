@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.jokers.todolist.models.Point;
 import com.jokers.todolist.models.ToDo;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class LogbookFragmentPresenter implements
     private final FirebaseAuth mAuth;
     private DatabaseReference mLogbookRef = null;
 
+    private final Point point;
+
     private final View mView;
 
     public LogbookFragmentPresenter(View view) {
@@ -34,6 +37,8 @@ public class LogbookFragmentPresenter implements
 
         mView = view;
         this.toDos = new ArrayList<>();
+
+        point = new Point();
     }
 
 
@@ -60,39 +65,49 @@ public class LogbookFragmentPresenter implements
     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
         mView.hideEmptyLogbookMessage();
 
+        // Create new to do
         ToDo toDo = snapshot.getValue(ToDo.class);
         assert toDo != null;
         toDo.setID(snapshot.getKey());
         toDo.setUid(mAuth.getUid());
 
+        // Add to-to to the list and update the view
         toDos.add(toDo);
         mView.addTodo(toDo);
+
+        // Update users points
+        point.increasePoints();
+        mView.updateTotalPoint();
     }
 
     @Override
     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
     }
 
     @Override
     public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-        // Remove the to-do
         String removedItemId = snapshot.getKey();
 
+        // Remove the to-do from list
         toDos.removeIf(toDo -> toDo.getID().equals(removedItemId));
         mView.removeTodo(removedItemId);
 
-        if (toDos.size() == 0) { mView.showEmptyLogbookMessage(); }
+        // Show empty list if no to-do
+        if (toDos.size() == 0) {
+            mView.showEmptyLogbookMessage();
+        }
+
+        // Update users points
+        point.decreasePoints();
+        mView.updateTotalPoint();
     }
 
     @Override
     public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
     }
 
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
-
     }
 
     public void startToDoListener(){
@@ -117,9 +132,11 @@ public class LogbookFragmentPresenter implements
 
     public interface View {
         void addTodo(ToDo todo);
-        void changeTodo(ToDo todo);
+
         void removeTodo(String todoId);
-        void resetTodoList();
+
+        void updateTotalPoint();
+
         void showEmptyLogbookMessage();
         void hideEmptyLogbookMessage();
         void showProgressBar();

@@ -1,5 +1,7 @@
 package com.jokers.todolist.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +33,7 @@ import java.util.Objects;
 public class LogbookFragment extends Fragment implements LogbookFragmentPresenter.View {
 
     private LogbookFragmentPresenter mPresenter;
+    private SharedPreferences mPreferences;
 
     // Retrieve data
     private RecyclerView mRecyclerView;
@@ -53,6 +56,9 @@ public class LogbookFragment extends Fragment implements LogbookFragmentPresente
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Setup the points on shared preferences for updateTotalPoint()
+        mPreferences = requireActivity().getSharedPreferences("points", Context.MODE_PRIVATE);
 
         // Declare todolist
         mToDos = new ArrayList<>();
@@ -90,18 +96,19 @@ public class LogbookFragment extends Fragment implements LogbookFragmentPresente
     }
 
     @Override
-    public void changeTodo(ToDo todo) {
-    }
-
-    @Override
     public void removeTodo(String id) {
         mToDos.removeIf(toDo -> toDo.getID().equals(id));
         mAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Update the point on SharedPreferences
+     */
     @Override
-    public void resetTodoList() {
-        mToDos.clear();
+    public void updateTotalPoint() {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putInt("total", mToDos.size());
+        editor.apply();
     }
 
     @Override

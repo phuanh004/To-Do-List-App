@@ -1,7 +1,9 @@
 package com.jokers.todolist.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,28 +19,39 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.jokers.todolist.LoginActivity;
 import com.jokers.todolist.R;
+import com.jokers.todolist.models.Point;
 
 import java.util.Objects;
 
 public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateListener {
+
+    // P
+    Point point;
 
     // Declare an instance of FirebaseAuth
     private FirebaseAuth mAuth;
 
     // Declare view ids
     private Button mLogOutButton;
-    private TextView mUserNameTextView;
+    private SharedPreferences mPreferences;
+    private TextView mUserNameTextView, mPointCounterTextView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Setup the points on shared preferences for updateTotalPoint()
+        mPreferences = requireActivity().getSharedPreferences("points", Context.MODE_PRIVATE);
+        point = new Point();
+
+        // Setup Firebase auth
         mAuth = FirebaseAuth.getInstance();
         mAuth.addAuthStateListener(this);
 
         // Binding view
         mLogOutButton = requireView().findViewById(R.id.logOutButton);
         mUserNameTextView = requireView().findViewById(R.id.userNameTextView);
+        mPointCounterTextView = requireView().findViewById(R.id.pointCounterTextView);
 
         // ACTIONS
         mLogOutButton.setOnClickListener(v -> {
@@ -73,6 +86,10 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         if (currentUser != null) {
             // TODO: DISPLAY USER DATA
             mUserNameTextView.setText("Name: " + currentUser.getDisplayName());
+
+            // Update user's points
+            loadPoints();
+            mPointCounterTextView.setText("Current points: " + point.getPoints());
         }
 
         // If not, navigate user to LoginActivity
@@ -80,5 +97,10 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
             Intent loginIntent = new Intent(getContext(), LoginActivity.class);
             startActivity(loginIntent);
         }
+    }
+
+    private void loadPoints() {
+        int p = mPreferences.getInt("total", 0);    // Point
+        point.setPoints(p);
     }
 }
