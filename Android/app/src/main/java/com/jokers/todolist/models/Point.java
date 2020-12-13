@@ -20,10 +20,27 @@ public class Point {
 
     //Default constructor:
     public Point() {
+        this.setPoints(0);
     }
 
-    public void addPoints(){
+    public Point(int points) {
+        this.setPoints(points);
+    }
+
+    public int getPoints() {
+        return totalPoints;
+    }
+
+    public void setPoints(int points) {
+        this.totalPoints = points;
+    }
+
+    public void increasePoints() {
         totalPoints += 1;
+    }
+
+    public void decreasePoints() {
+        totalPoints -= 1;
     }
 
 }

@@ -12,4 +12,15 @@
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
+    <style name="InputDarkTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/default_app_white</item>
+        <item name="colorAccent">@color/default_app_white</item>
+
+        <!-- Change input color -->
+        <item name="android:textColorHint">@color/default_app_white</item>
+        <item name="colorControlActivated">@color/default_app_white</item>
+        <item name="colorControlHighlight">@color/default_app_white</item>
+        <item name="colorControlNormal">@color/default_app_white</item>
+    </style>
+
 </resources>
