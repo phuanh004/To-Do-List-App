@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#F8E7E7">
 
     <TextView
         android:id="@+id/dueDateTextView"
@@ -12,8 +13,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="0.5"
-        android:textColor="#d50000"
         android:textAlignment="textEnd"
+        android:textColor="#d50000"
         app:layout_constraintEnd_toStartOf="@+id/hasDocumentIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,11 +46,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:drawableEndCompat="@drawable/ic_document"
         app:layout_constraintBottom_toBottomOf="@+id/titleTv"
         app:layout_constraintEnd_toStartOf="@+id/editToDoButton"
         app:layout_constraintTop_toTopOf="@+id/titleTv"
-        app:layout_constraintVertical_bias="0.482"
-        app:drawableEndCompat="@drawable/ic_document" />
+        app:layout_constraintVertical_bias="0.482" />
 
     <TextView
         android:id="@+id/titleTv"
@@ -100,11 +101,11 @@
 
             <TextView
                 android:id="@+id/dueDateExpandedTv"
-                android:textColor="#d50000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:textColor="#d50000" />
 
         </LinearLayout>
     </LinearLayout>

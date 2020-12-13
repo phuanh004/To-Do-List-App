@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#F8E7E7">
 
     <TextView
         android:id="@+id/doneDateLogbookTextView"
@@ -20,8 +21,8 @@
         android:id="@+id/toDoLogbookCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:buttonTint="@color/dark_violet_more"
         android:layout_marginTop="10dp"
+        android:buttonTint="@color/dark_violet_more"
         android:checked="true"
         app:layout_constraintBottom_toBottomOf="@+id/titleLogbookTv"
         app:layout_constraintStart_toStartOf="parent"
