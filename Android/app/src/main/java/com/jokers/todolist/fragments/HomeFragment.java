@@ -46,9 +46,11 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (mPresenter != null) { mPresenter.startToDoListener(); }
+        if (mPresenter != null) {
+            mPresenter.startToDoListener();
+        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -112,11 +114,6 @@ public class HomeFragment extends Fragment implements HomeFragmentPresenter.View
     public void removeTodo(String id) {
         mToDos.removeIf(toDo -> toDo.getID().equals(id));
         mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void resetTodoList() {
-        mToDos.clear();
     }
 
     @Override

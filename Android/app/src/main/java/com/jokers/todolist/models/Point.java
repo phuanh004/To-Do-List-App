@@ -3,11 +3,11 @@ package com.jokers.todolist.models;
 /**
  * Point Class:
  * Purpose: give each user points to access to the shop for customization of GUI
+ *
  * @author Guan Li
  */
 
-
-public class Points{
+public class Point {
     /**
      * Notes:
      * Two Attribute
@@ -16,22 +16,14 @@ public class Points{
      * Furthur development on this class.
      */
 
-    private int point;
+    private int totalPoints;
 
     //Default constructor:
-    public Points(){
-        point = 0;
+    public Point() {
     }
-
-    public Points(int point){
-        this.point = point;
-    }
-
-    //access the user class
 
     public void addPoints(){
-        point = point + 1;
+        totalPoints += 1;
     }
-
 
 }

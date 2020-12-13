@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -63,8 +62,13 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
         private void bind(ToDo toDo) {
             mTaskTextView.setText(toDo.getTitle());
             mDescriptionTexView.setText(toDo.getDescription());
-            mDoDay.setText(toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoDate()));
             mDueDateTextView.setText(toDo.getFormattedRemainingDays());
+
+            mDoDay.setText(
+                    toDo.getDoDate() == null ?
+                            "Today" :
+                            toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoDate())
+            );
             mDueDateExpandedTextView.setText(
                     (toDo.getDueDate() == null) ?
                             "" : "Deadline: " + toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDueDate())
@@ -144,7 +148,6 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.MyView
             // sent bundle
             intent.putExtra("toDoId", toDos.get(position).getID());
             v.getContext().startActivity(intent);
-
         });
     }
 

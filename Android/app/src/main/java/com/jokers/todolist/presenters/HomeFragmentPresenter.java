@@ -1,7 +1,5 @@
 package com.jokers.todolist.presenters;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -17,7 +15,6 @@ import com.jokers.todolist.models.ToDo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class HomeFragmentPresenter implements
@@ -56,12 +53,12 @@ public class HomeFragmentPresenter implements
 
         toDos.add(toDo);
         mView.addTodo(toDo);
+
+
     }
 
     @Override
     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//        Log.d("TAG", "onChildChanged: " + previousChildName);
-
         ToDo toDo = snapshot.getValue(ToDo.class);
 
         if (toDo == null ) { return; }
@@ -69,11 +66,9 @@ public class HomeFragmentPresenter implements
         toDo.setID(snapshot.getKey());
         toDo.setUid(mAuth.getUid());
 
-        Log.d("TAG", "onChildChanged: "  + snapshot.getKey());
-
+        // Change the note in the list
         int index;
         int pos;
-
         if (previousChildName != null) {
              index = IntStream.range(0, toDos.size())
                     .filter(i -> previousChildName.equals(toDos.get(i).getID()))
@@ -105,12 +100,10 @@ public class HomeFragmentPresenter implements
 
     @Override
     public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//        Log.d("TAG", "onChildMoved: ");
     }
 
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
-        Log.d("TAG", "onCancelled: ");
     }
 
     @Override
@@ -154,7 +147,6 @@ public class HomeFragmentPresenter implements
         void addTodo(ToDo todo);
         void changeTodo(int pos, ToDo todo);
         void removeTodo(String todoId);
-        void resetTodoList();
         void showProgressBar();
         void hideProgressBar();
     }

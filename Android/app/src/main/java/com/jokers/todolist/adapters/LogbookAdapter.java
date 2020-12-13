@@ -52,8 +52,14 @@ public class LogbookAdapter extends RecyclerView.Adapter<LogbookAdapter.MyViewHo
         private void bind(ToDo toDo) {
             mTitleTextView.setText(toDo.getTitle());
             mDescriptionTexView.setText(toDo.getDescription());
-            mDoDay.setText(toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoDate()));
+
             mDoneDateTextView.setText(toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoneDate()));
+
+            mDoDay.setText(
+                    toDo.getDoDate() == null ?
+                            "Today" :
+                            toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoDate())
+            );
             mDueDateExpandedTextView.setText(
                     (toDo.getDueDate() == null) ?
                             "" : "Deadline: " + toDo.getDateInDisplayFormat("EEE, MMM d", toDo.getDoneDate())
@@ -130,9 +136,5 @@ public class LogbookAdapter extends RecyclerView.Adapter<LogbookAdapter.MyViewHo
     @Override
     public int getItemCount() {
         return toDos.size();
-    }
-
-    private void removeToDo(){
-
     }
 }

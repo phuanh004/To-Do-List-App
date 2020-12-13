@@ -3,7 +3,6 @@ package com.jokers.todolist;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -22,7 +21,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.jokers.todolist.models.ToDo;
-import com.jokers.todolist.presenters.AddToDoActivityPresenter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +32,6 @@ import java.util.Objects;
 public class EditToDoActivity extends AppCompatActivity {
 
     private DatabaseReference mTodosRef;
-    private ValueEventListener postListener;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -75,14 +72,19 @@ public class EditToDoActivity extends AppCompatActivity {
         // Get to do id from the intent extra bundle
         Bundle bundle = getIntent().getExtras();
         assert (bundle != null);
-        String Id = bundle.getString("toDoId");
+        String uid = bundle.getString("toDoId");
+
+        // Check user is already login
+        if (uid == null) {
+            return;
+        }
 
         // Get value from firebase one time
         String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();    // $uid
-            mTodosRef = mDatabase              // users/$uid/todos
+        mTodosRef = mDatabase              // users/$uid/todos
                 .child(userId)
                 .child("todos")
-                .child(Id);
+                .child(uid);
 
         ValueEventListener postListener = new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -166,6 +168,7 @@ public class EditToDoActivity extends AppCompatActivity {
                     Date date;
                     try {
                         date = sdf.parse(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1);
+                        assert date != null;
                         mDate = String.valueOf(date.getTime()).substring(0, 10); // 10 char unixtime
 
                         switch (currentDateDialog) {
