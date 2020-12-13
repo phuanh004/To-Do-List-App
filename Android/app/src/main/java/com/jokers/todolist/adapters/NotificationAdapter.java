@@ -65,11 +65,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             // Message that display on notification
             if (toDo.getRemainingDays() == 0) {
-                message = "It's time to finish " + toDo.getTitle()
-                        + ", which overdue " + toDo.getFormattedRemainingDays();
-            } else {
                 message = "Your task, " + toDo.getTitle()
                         + " is due today !";
+            } else {
+                message = "It's time to finish " + toDo.getTitle()
+                        + ", which overdue " + toDo.getFormattedRemainingDays();
             }
 
             mNotificationTextView.setText(message);
