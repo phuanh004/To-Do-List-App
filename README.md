@@ -24,6 +24,7 @@ Custom config
 Default config
 - Use our default config
 - Tools > SDK Manager or click SDK Manager (<img src="https://developer.android.com/studio/images/buttons/toolbar-sdk-manager.png" width="25" height="25">)
+- Install the Android SDK with target API Level in the `Prerequisites > targetSdkVersion` above.
 
 ### Run
 You can run this project by install the release apk file on your device.
