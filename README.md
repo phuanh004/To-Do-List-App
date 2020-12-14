@@ -6,11 +6,9 @@ Our project is a motivational to-do-list with a couple of unique features, we ad
 We want to make sure that the user’s experience is as friendly and unique as possible, which is why we added the points and ranks feature. Once the user can complete the task, the application will keep track of the number of tasks that the user has completed to provide them a rank indicating their hard work. These ranks also are written in such a way that will motivate the user to keep working harder.
 
 ## Prerequisites
-`Android 5.1 and up`
-minSdkVersion `24`
-targetSdkVersion `29`
-versionCode `1`
-versionName `1.0`
+- `Android 5.1 and up`
+- minSdkVersion `24`
+- targetSdkVersion `29`
 
 ## How to
 ### View the UI Design
