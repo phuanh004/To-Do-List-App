@@ -1,7 +1,5 @@
 # To Do List App
 
-[![buddy pipeline](https://app.buddy.works/phuanh004/to-do-list-app/pipelines/pipeline/288193/badge.svg?token=4070ca1d7e58979d3e8857f10101c2ce660d7cf246fdf325b29374284b7c684a "buddy pipeline")](https://app.buddy.works/phuanh004/to-do-list-app/pipelines/pipeline/288193)
-
 ## Introduction
 Our project is a motivational to-do-list with a couple of unique features, we added these features so that it will make the user have an easier time to keep in track of their time management. The app’s end goal is to provide a healthy lifestyle and environment for the user’s experience, with tools such as the add-to-do feature, log-book feature, notification feature, and the points feature to keep the user’s experience clean, unique, and fun.
 
