@@ -13,7 +13,7 @@ versionCode `1`
 versionName `1.0`
 
 ## How to
-### View the UI
+### View the UI Design
 You need the Adobe XD to open an XD file.
 
 ### Build:
