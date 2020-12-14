@@ -126,7 +126,7 @@
                     android:id="@+id/nightModeSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Switch"
+                    android:text="Off / On"
                     android:textColor="@color/textColor"
                     tools:layout_conversion_absoluteHeight="27dp"
                     tools:layout_conversion_absoluteWidth="88dp" />
