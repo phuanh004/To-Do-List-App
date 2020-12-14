@@ -132,11 +132,8 @@ public class LogbookFragmentPresenter implements
 
     public interface View {
         void addTodo(ToDo todo);
-
         void removeTodo(String todoId);
-
         void updateTotalPoint();
-
         void showEmptyLogbookMessage();
         void hideEmptyLogbookMessage();
         void showProgressBar();

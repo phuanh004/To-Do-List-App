@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,8 +16,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jokers.todolist.LoginActivity;
 import com.jokers.todolist.R;
 import com.jokers.todolist.models.Point;
@@ -36,18 +38,15 @@ import java.util.Objects;
 
 public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateListener {
 
-    //user Points
+    // User Points
     Point point;
 
     // Declare an instance of FirebaseAuth
     private FirebaseAuth mAuth;
 
-    // Declare view ids
-    private Boolean isNightMode = null;
-    private Button mLogOutButton;
-    private Switch nightModeSwt;
-    private SharedPreferences mPreferences;
-    private SharedPreferences nightPreferences;
+    private Button mLogOutButton, mResetTaskButton;
+    private SwitchMaterial nightModeSwt;
+    private SharedPreferences mPointPreferences, mNightPreferences;
     private TextView mUserNameTextView, mPointCounterTextView, mUserRankTextView;
 
     @Override
@@ -55,8 +54,8 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
         super.onViewCreated(view, savedInstanceState);
 
         // Setup the points on shared preferences for updateTotalPoint()
-        mPreferences = requireActivity().getSharedPreferences("points", Context.MODE_PRIVATE);
-        nightPreferences = requireActivity().getSharedPreferences("nightMode", Context.MODE_PRIVATE);
+        mPointPreferences = requireActivity().getSharedPreferences("points", Context.MODE_PRIVATE);
+        mNightPreferences = requireActivity().getSharedPreferences("nightMode", Context.MODE_PRIVATE);
 
         //new point
         point = new Point();
@@ -67,15 +66,19 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
 
         // Binding view
         mLogOutButton = requireView().findViewById(R.id.logOutButton);
+        mResetTaskButton = requireView().findViewById(R.id.resetTaskButton);
         mUserNameTextView = requireView().findViewById(R.id.userNameTextView);
         mPointCounterTextView = requireView().findViewById(R.id.pointCounterTextView);
         mUserRankTextView = requireView().findViewById(R.id.rankTextView);
         nightModeSwt = requireView().findViewById(R.id.nightModeSwitch);
 
-        if (isNightMode != null)
-        {
+        // Read the night mode value from setting pref
+        // Declare view ids
+        Boolean isNightMode = mNightPreferences.getBoolean("isDark", false);
+
+        // Set night mode if saved
+        if (isNightMode != null) {
             // Read the value from setting pref
-            isNightMode = nightPreferences.getBoolean("isDark",  false);
             nightModeSwt.setChecked(isNightMode);
         }
 
@@ -88,22 +91,31 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
             mAuth.signOut();
         });
 
+        mResetTaskButton.setOnClickListener(v -> {
+            // Remove all the tasks in logbook
+            String uid = mAuth.getCurrentUser().getUid();   // user id
+
+            if (uid != null) {
+                DatabaseReference logbookRef = FirebaseDatabase.getInstance().getReference()
+                        .child(uid)
+                        .child("logbook");  // users/$uid/logbook
+
+                logbookRef.removeValue();
+            }
+        });
+
         //nightmode
         nightModeSwt.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (nightModeSwt.isChecked()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                isNightMode = true;
-                SharedPreferences.Editor editor = nightPreferences.edit();
-                editor.putBoolean("isDark", isNightMode);
-                editor.apply();
-            }
-            else{
+            } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                isNightMode = false;
-                SharedPreferences.Editor editor = nightPreferences.edit();
-                editor.putBoolean("isDark", isNightMode);
-                editor.apply();
             }
+
+            // Save settings
+            SharedPreferences.Editor editor = mNightPreferences.edit();
+            editor.putBoolean("isDark", isChecked);
+            editor.apply();
         });
     }
 
@@ -154,7 +166,7 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
     }
 
     private void loadPoints() {
-        int p = mPreferences.getInt("total", 0);    // Point
+        int p = mPointPreferences.getInt("total", 0);    // Point
         point.setPoints(p);
     }
 
