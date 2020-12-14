@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -102,9 +103,12 @@ public class SettingFragment extends Fragment implements FirebaseAuth.AuthStateL
 
                 logbookRef.removeValue();
             }
+
+            // Toast the message
+            Toast.makeText(getContext(), "Your logbook is now empty!", Toast.LENGTH_SHORT).show();
         });
 
-        //nightmode
+        // Night mode
         nightModeSwt.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (nightModeSwt.isChecked()) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
