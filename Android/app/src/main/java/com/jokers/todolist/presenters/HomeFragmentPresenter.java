@@ -1,7 +1,5 @@
 package com.jokers.todolist.presenters;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -17,7 +15,6 @@ import com.jokers.todolist.models.ToDo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class HomeFragmentPresenter implements
@@ -25,14 +22,14 @@ public class HomeFragmentPresenter implements
         ChildEventListener,
         OnSuccessListener<Void> {
 
-    private List<ToDo> toDos;
+    private final List<ToDo> toDos;
 
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
+    private final DatabaseReference mDatabase;
+    private final FirebaseAuth mAuth;
     private DatabaseReference mTodosRef = null;
     private boolean loaded;
 
-    private View mView;
+    private final View mView;
 
     public HomeFragmentPresenter(View view) {
         mDatabase = FirebaseDatabase.getInstance().getReference();                      // initialize Firebase Realtime Database
@@ -56,28 +53,41 @@ public class HomeFragmentPresenter implements
 
         toDos.add(toDo);
         mView.addTodo(toDo);
+
+
     }
 
     @Override
     public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//        Log.d("TAG", "onChildChanged: " + previousChildName);
-
         ToDo toDo = snapshot.getValue(ToDo.class);
-        assert toDo != null;
+
+        if (toDo == null ) { return; }
+
         toDo.setID(snapshot.getKey());
         toDo.setUid(mAuth.getUid());
 
-        assert previousChildName != null;
-        int index = IntStream.range(0, toDos.size())
-                .filter(i -> previousChildName.equals(toDos.get(i).getID()))
-                .findFirst().orElse(-1);
+        // Change the note in the list
+        int index;
+        int pos;
+        if (previousChildName != null) {
+             index = IntStream.range(0, toDos.size())
+                    .filter(i -> previousChildName.equals(toDos.get(i).getID()))
+                    .findFirst().orElse(-1);
 
-        int pos = index != -1 ? (index + 1) : index;
+            pos = index != -1 ? (index + 1) : index;
+        } else {
+            index = IntStream.range(0, toDos.size())
+                    .filter(i -> toDos.get(i).getID().equals(toDo.getID()))
+                    .findFirst().orElse(-1);
+
+            pos = index;
+        }
 
         if (pos != -1) {
             toDos.set(pos, toDo);
             mView.changeTodo(pos, toDo);
         }
+
     }
 
     @Override
@@ -90,12 +100,10 @@ public class HomeFragmentPresenter implements
 
     @Override
     public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//        Log.d("TAG", "onChildMoved: ");
     }
 
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
-        Log.d("TAG", "onCancelled: ");
     }
 
     @Override
@@ -139,7 +147,6 @@ public class HomeFragmentPresenter implements
         void addTodo(ToDo todo);
         void changeTodo(int pos, ToDo todo);
         void removeTodo(String todoId);
-        void resetTodoList();
         void showProgressBar();
         void hideProgressBar();
     }

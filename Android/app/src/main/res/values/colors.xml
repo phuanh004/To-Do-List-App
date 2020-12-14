@@ -8,11 +8,16 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
-
+    <color name="default_app_white">#FFFFFF</color>
 
     <!--  Button color   -->
     <color name="light_violet">#7C87C5</color>
     <color name="dark_violet">#040227</color>
     <color name="dark_violet_more">#030029</color>
     <color name="light_pink">#E28FB8</color>
+
+    <!--    Color For day mode-->
+    <color name= "backgroundColor"> #F8E7E7 </color>
+    <color name= "textColor" > #000000 </color>
+
 </resources>

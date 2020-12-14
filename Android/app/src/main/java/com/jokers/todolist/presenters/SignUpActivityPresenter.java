@@ -17,7 +17,6 @@ public class SignUpActivityPresenter implements OnCompleteListener<AuthResult> {
     private final FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
-    // TODO: Convert to User object
     private String mUserDisplayName;
 
     public SignUpActivityPresenter(FirebaseAuth mAuth, SignUpActivityPresenter.View view) {

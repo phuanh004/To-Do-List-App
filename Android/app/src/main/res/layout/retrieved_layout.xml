@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/backgroundColor">
 
     <TextView
         android:id="@+id/dueDateTextView"
@@ -12,9 +13,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="0.5"
-        android:textColor="#d50000"
         android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="#d50000"
+        app:layout_constraintEnd_toStartOf="@+id/hasDocumentIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
@@ -22,7 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:buttonTint="@color/dark_violet_more"
+        android:buttonTint="@color/textColor"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toBottomOf="@+id/titleTv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,11 +36,24 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:background="#00FFFFFF"
+        android:drawableTint="@color/textColor"
         android:drawableEnd="@drawable/ic_create"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/titleTv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/titleTv" />
+
+    <TextView
+        android:id="@+id/hasDocumentIcon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:visibility="gone"
+        app:drawableEndCompat="@drawable/ic_document"
+        app:layout_constraintBottom_toBottomOf="@+id/titleTv"
+        app:layout_constraintEnd_toStartOf="@+id/editToDoButton"
+        app:layout_constraintTop_toTopOf="@+id/titleTv"
+        app:layout_constraintVertical_bias="0.482" />
 
     <TextView
         android:id="@+id/titleTv"
@@ -48,7 +63,7 @@
         android:layout_marginTop="10dp"
         android:paddingStart="0dp"
         android:paddingEnd="10dp"
-        android:textColor="@color/dark_violet_more"
+        android:textColor="@color/textColor"
         app:layout_constraintEnd_toStartOf="@+id/dueDateTextView"
         app:layout_constraintStart_toEndOf="@+id/toDoCheckBox"
         app:layout_constraintTop_toTopOf="parent" />
@@ -71,6 +86,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:paddingBottom="0dp"
+            android:textColor="@color/textColor"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="71dp" />
 
@@ -85,15 +101,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textAlignment="textStart" />
+                android:textAlignment="textStart"
+                android:textColor="@color/textColor" />
 
             <TextView
                 android:id="@+id/dueDateExpandedTv"
-                android:textColor="#d50000"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:textAlignment="textEnd" />
+                android:textAlignment="textEnd"
+                android:textColor="#d50000" />
 
         </LinearLayout>
     </LinearLayout>

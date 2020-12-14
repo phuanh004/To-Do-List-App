@@ -14,9 +14,9 @@ import java.util.Objects;
 public class AddToDoActivityPresenter implements
         OnSuccessListener<Void>, OnFailureListener{
 
-    private View mView;
-    private FirebaseAuth mAuth;
-    private DatabaseReference mDatabase;
+    private final View mView;
+    private final FirebaseAuth mAuth;
+    private final DatabaseReference mDatabase;
     private ToDo toDo;
 
     public AddToDoActivityPresenter(View view) {
@@ -38,7 +38,6 @@ public class AddToDoActivityPresenter implements
         DatabaseReference todosRef = mDatabase              // users/$uid/todos
                 .child(userId)
                 .child("todos");
-
 
         String toDoKey = todosRef.push().getKey();          // Push to db with unique key
 

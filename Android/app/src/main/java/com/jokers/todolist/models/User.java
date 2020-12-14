@@ -2,14 +2,14 @@ package com.jokers.todolist.models;
 
 import java.util.ArrayList;
 
-public class User{
-    
-    /**
-     * User Class:
-     * Purpose: define the user and user's access to tags and task
-     * @author Guan Li
-     */
+/**
+ * User Class:
+ * Purpose: define the user and user's access to tags and task
+ *
+ * @author Guan Li
+ */
 
+public class User {
     //method login, item, shopaccess, id
 
     String id; //Id for access
@@ -20,7 +20,7 @@ public class User{
     //initiate an object called task
 
     //methods
-    
+
     /*
     public login(){
 
@@ -28,7 +28,7 @@ public class User{
     */
     ArrayList<ToDo> toDoList = new ArrayList<>();
     //initalize a points system on the User:
-    Points points = new Points();
+    Point point = new Point();
 
     public User(){
         System.out.println("A empty user created");
@@ -52,18 +52,23 @@ public class User{
     public String getId(){
         return this.id;
     }
+
     public String getPassword(){
         return this.password;
     }
+
     public String getEmail(){
         return this.email;
     }
+
     public String getAvatar(){
         return this.avatar;
     }
+
     public int getLevel(){
         return this.level;
     }
+
     public ToDo getTask(int position){
         return toDoList.get(position);
     }
@@ -73,18 +78,23 @@ public class User{
     public void setId(String id){
         this.id = id;
     }
+
     public void setPassword(String password){
         this.password = password;
     }
+
     public void setEmial(String email){
         this.email = email;
     }
+
     public void setAvatar(String avatar){
         this.avatar = avatar;
     }
+
     public void setLevel(int level){
         this.level = level;
     }
+
     public void addTask(ToDo toDo){
         toDoList.add(toDo);
     }
