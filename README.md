@@ -27,12 +27,12 @@ Custom config
 
 Default config
 - Use our default config
-- Tools > SDK Manager or click SDK Manager ![SDK Manager icon](https://developer.android.com/studio/images/buttons/toolbar-sdk-manager.png)
+- Tools > SDK Manager or click SDK Manager (<img src="https://developer.android.com/studio/images/buttons/toolbar-sdk-manager.png" width="25" height="25">)
 
 ### Run
 You can run this project by install the release apk file on your device.
 
-**Or **
+**Or**
 
 Using emulator:
 - In Android Studio, click Sync Project with Gradle Files.
